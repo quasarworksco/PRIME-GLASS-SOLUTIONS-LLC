@@ -593,6 +593,34 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 .x{color:var(--dim);font-size:18px}
 .foot p{font-size:12.5px;color:var(--dim);max-width:380px}
 
+/* ---------- Light sections ---------- */
+section.light{
+  --text:#0B1220;--muted:#475569;--dim:#64748B;
+  --line:rgba(15,23,42,.09);--line2:rgba(15,23,42,.16);
+  --glass:#F4F6FA;--glass2:#EEF2F8;--bg2:#FFFFFF;
+  --cyan:#1F56E0;--green:#1F56E0;--violet:#3657B8;--amber:#0F172A;--rose:#94A3B8;
+  background:#F5F7FB;color:var(--text);
+}
+section.light + section.light{border-top:1px solid rgba(15,23,42,.06)}
+section.light .card{background:#fff;border-color:rgba(15,23,42,.08);box-shadow:0 1px 2px rgba(15,23,42,.04),0 12px 32px -18px rgba(15,23,42,.18)}
+section.light .card:hover{border-color:rgba(31,86,224,.35)}
+section.light .step.done .dot,section.light .day.lit .dn{background:#EAF0FF}
+section.light .day.lit .dn{box-shadow:0 0 0 4px rgba(31,86,224,.08)}
+section.light .lv.x{background:rgba(15,23,42,.05);color:#94A3B8}
+section.light .lv.o{background:rgba(15,23,42,.07);color:#0F172A}
+section.light .pc.main{background:#F3F7FF;border-color:rgba(31,86,224,.35)}
+section.light .toggle,section.light .pp,section.light .plan{background:#F6F8FB}
+section.light .plan.best{background:#EEF3FF;border-color:rgba(31,86,224,.5)}
+section.light .sw{background:rgba(15,23,42,.18)}
+section.light .pp .pct.b{background:#0B1220;color:#fff}
+section.light .pay-bar i.b{background:#9DB6F2}
+section.light .ex .ico,section.light .host-info .ico{background:#F1F4F9;border-color:rgba(15,23,42,.1);color:#1F56E0}
+section.light .host{border-color:rgba(15,23,42,.1)}
+section.light .ins .appicon{background:#0B1A33}
+section.light .early{background:#EEF3FF;border-color:rgba(31,86,224,.3)}
+section.light .phone{box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 50px 90px -30px rgba(15,23,42,.45)}
+.screen{--text:#F5F8FD;--muted:#A9B6C9;--dim:#7F8DA3;--line:rgba(148,178,220,.12);--line2:rgba(148,178,220,.22);--glass:rgba(255,255,255,.035);--glass2:rgba(255,255,255,.065);--cyan:#4F8BFF;--green:#4F8BFF;--amber:#E6ECF5;color:var(--text)}
+
 /* ---------- Responsive ---------- */
 @media (max-width:1080px){
   .navlinks{display:none}
@@ -847,7 +875,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 </div>
 
 <!-- ================= 01 RETO ================= -->
-<section id="reto">
+<section id="reto" class="light">
   <div class="wrap">
     <div class="head">
       <span class="eyebrow rv"><span class="num">01</span> El punto de partida</span>
@@ -899,7 +927,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 </section>
 
 <!-- ================= 03 FLUJO ================= -->
-<section id="flujo">
+<section id="flujo" class="light">
   <div class="wrap">
     <div class="head">
       <span class="eyebrow rv"><span class="num">03</span> Flujo recomendado</span>
@@ -1029,7 +1057,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 </section>
 
 <!-- ================= 06 MOVIL ================= -->
-<section id="movil">
+<section id="movil" class="light">
   <div class="wrap app">
     <div class="phone rv" aria-hidden="true">
       <div class="screen">
@@ -1082,7 +1110,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 </section>
 
 <!-- ================= 07 ROLES ================= -->
-<section id="roles">
+<section id="roles" class="light">
   <div class="wrap">
     <div class="head">
       <span class="eyebrow rv"><span class="num">07</span> Usuarios y permisos</span>
@@ -1159,7 +1187,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 </section>
 
 <!-- ================= 09 ENTREGA ================= -->
-<section id="entrega">
+<section id="entrega" class="light">
   <div class="wrap">
     <div class="head">
       <span class="eyebrow rv"><span class="num">09</span> Plan de entrega</span>
@@ -1242,7 +1270,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 </section>
 
 <!-- ================= 11 INVERSION ================= -->
-<section id="inversion">
+<section id="inversion" class="light">
   <div class="wrap">
     <div class="head">
       <span class="eyebrow rv"><span class="num">11</span> Inversión</span>

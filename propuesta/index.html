@@ -581,7 +581,12 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
 .partners{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
 .partner{display:flex;align-items:center;gap:12px}
-.partner svg{width:38px;height:38px}
+.plogo{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:#fff;padding:8px;box-shadow:0 10px 30px -12px rgba(0,0,0,.6)}
+.plogo img{max-width:100%;max-height:100%;width:auto;height:auto;display:block}
+.plogo.lg{width:84px;height:84px;border-radius:22px;padding:13px}
+.by{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:26px;position:relative}
+.by .amp{color:var(--dim);font-size:16px}
+.by .plogo{animation:bob 6s ease-in-out infinite}.by .plogo:last-child{animation-delay:-3s}
 .partner b{font-family:var(--display);font-weight:600;font-size:15px;display:block;line-height:1.1}
 .partner small{font-size:11px;color:var(--dim);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .x{color:var(--dim);font-size:18px}
@@ -624,6 +629,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
   .wrap{padding:0 16px}
   nav.top{padding:8px 8px 8px 14px}
   .brand span.long{display:none}
+  .partners .x{display:none}
   .pill{font-size:12px}.pill .pfor{display:none}.pill .pmob{display:inline!important}
   .hero{padding-top:120px}
   .float.f2{left:-6px}.float.f1{right:-4px}
@@ -741,9 +747,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
   <symbol id="i-handshake" viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8"/></symbol>
 
   <!-- brand marks -->
-  <symbol id="m-prime" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11" fill="#0B1A30" stroke="url(#lg-glass)" stroke-width="1.5"/><path d="M12 29V11h9a6 6 0 0 1 0 12h-9" fill="none" stroke="url(#lg-glass)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 11l6-4M27 17l5-3" stroke="#EAF1FB" stroke-opacity=".55" stroke-width="1.4" stroke-linecap="round"/></symbol>
-  <symbol id="m-dgp" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11" fill="#0B1A30" stroke="url(#lg-glass)" stroke-width="1.5"/><circle cx="20" cy="20" r="9" fill="none" stroke="url(#lg-glass)" stroke-width="2.2"/><ellipse cx="20" cy="20" rx="4" ry="9" fill="none" stroke="#EAF1FB" stroke-opacity=".6" stroke-width="1.3"/><path d="M11 20h18" stroke="#EAF1FB" stroke-opacity=".6" stroke-width="1.3"/></symbol>
-  <symbol id="m-moya" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11" fill="#0B1A30" stroke="url(#lg-warm)" stroke-width="1.5"/><path d="M10 28V13l10 10 10-10v15" fill="none" stroke="url(#lg-warm)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="m-prime" viewBox="0 0 40 40"><rect x="0" y="0" width="40" height="40" rx="11" fill="#2F6BFF"/><text x="20" y="25.5" text-anchor="middle" font-family="Sora, Inter, sans-serif" font-size="15" font-weight="700" fill="#fff" letter-spacing="-.5">PG</text></symbol>
 </svg>
 
 <div class="ambient" aria-hidden="true"><div class="gridbg"></div></div>
@@ -788,7 +792,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
       <div class="meta fade-in" style="--d:1.5s">
         <div><small>Preparado para</small><strong>Prime Glass Solutions LLC</strong></div>
         <div><small>Preparado por</small><strong>DGP Global Group &amp; Moya Company</strong></div>
-        <div><small>Entrega</small><strong class="big"><span data-count="10">0</span> días</strong></div>
+        <div><small>Entrega</small><strong class="big"><span data-count="6">0</span> días</strong></div>
         <div><small>Inversión</small><strong class="big">$<span data-count="585">0</span></strong></div>
       </div>
     </div>
@@ -1159,20 +1163,17 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
   <div class="wrap">
     <div class="head">
       <span class="eyebrow rv"><span class="num">09</span> Plan de entrega</span>
-      <h2 class="rv" style="--d:.1s">Listo para operar en <em class="gtext">10 días</em>.</h2>
+      <h2 class="rv" style="--d:.1s">Listo para operar en <em class="gtext">6 días</em>.</h2>
       <p class="lead rv" style="--d:.2s">Un calendario claro, con avances visibles durante todo el proceso. El conteo inicia con la aprobación de la propuesta y la entrega de la información inicial.</p>
     </div>
     <div class="tl" id="tl">
       <div class="fill"></div>
-      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>1</b></div></div><div class="card dc"><h4>Arranque y configuración <span class="tag">KICKOFF</span></h4><p>Reunión inicial, levantamiento de procesos, marca, servicios, lista de usuarios y matriz de permisos.</p></div></div>
-      <div class="day rv"><div class="dn"><div><small>DÍAS</small><b>2–3</b></div></div><div class="card dc"><h4>Clientes, oportunidades y proyectos</h4><p>Base de datos, tablero de oportunidades, ficha de proyecto con medidas, materiales, responsables, tareas y calendario.</p></div></div>
-      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>4</b></div></div><div class="card dc"><h4>Documentos y plantilla de estimados <span class="tag">CORREO</span></h4><p>Gestor de documentos por proyecto, plantilla de estimados en PDF y envío por correo con enlace de aprobación.</p></div></div>
-      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>5</b></div></div><div class="card dc"><h4>Precios, costos y márgenes</h4><p>Catálogo de materiales, mano de obra, subcontratos, órdenes de cambio y margen estimado por proyecto.</p></div></div>
-      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>6</b></div></div><div class="card dc"><h4>Comunicación y llamadas</h4><p>Chat por proyecto, canal general, avisos, llamadas de voz y video entre usuarios y atención de llamadas.</p></div></div>
-      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>7</b></div></div><div class="card dc"><h4>App móvil y vista de campo <span class="tag">PWA</span></h4><p>Instalación en pantalla de inicio, asignaciones, avances, fotos y notificaciones para las cuadrillas.</p></div></div>
-      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>8</b></div></div><div class="card dc"><h4>Permisos y reportes</h4><p>Perfiles de Administración, Ventas, Gerencia y Campo. Tablero de ingresos y exportación para contabilidad.</p></div></div>
-      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>9</b></div></div><div class="card dc"><h4>Sitio web y pruebas con el equipo</h4><p>Publicación del sitio web (si se contrata), carga de datos iniciales y pruebas reales con usuarios de cada perfil.</p></div></div>
-      <div class="day final rv"><div class="dn"><div><small>DÍA</small><b>10</b></div></div><div class="card dc"><h4>Capacitación y puesta en marcha <span class="tag">ENTREGA</span></h4><p>Sesión de capacitación por perfil, guía rápida de uso y salida a producción.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>1</b></div></div><div class="card dc"><h4>Arranque, clientes y oportunidades <span class="tag">KICKOFF</span></h4><p>Reunión inicial, configuración de marca, usuarios y matriz de permisos. Base de clientes, tablero de oportunidades y origen del lead.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>2</b></div></div><div class="card dc"><h4>Proyectos y documentos</h4><p>Ficha de proyecto con dirección, medidas, materiales, responsables, tareas y calendario. Gestor de documentos, planos y fotos por proyecto.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>3</b></div></div><div class="card dc"><h4>Estimados, precios y costos <span class="tag">CORREO</span></h4><p>Plantilla de estimados en PDF con envío por correo y enlace de aprobación. Catálogo de materiales, mano de obra, órdenes de cambio y margen.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>4</b></div></div><div class="card dc"><h4>Comunicación y app móvil <span class="tag">PWA</span></h4><p>Chat por proyecto, avisos, llamadas de voz y video. App instalable en pantalla de inicio con asignaciones, avances y fotos para las cuadrillas.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>5</b></div></div><div class="card dc"><h4>Reportes y sitio web</h4><p>Tablero de cotizado, facturado, cobrado y pendiente, con exportación para contabilidad. Publicación del sitio web conectado al CRM (si se contrata).</p></div></div>
+      <div class="day final rv"><div class="dn"><div><small>DÍA</small><b>6</b></div></div><div class="card dc"><h4>Pruebas, capacitación y entrega <span class="tag">ENTREGA</span></h4><p>Carga de datos iniciales, pruebas con usuarios de cada perfil, capacitación por perfil, guía rápida y salida a producción.</p></div></div>
     </div>
     <div class="stages">
       <div class="card stg rv"><span class="k">ETAPA 1 · OFICINA</span><h4>Ventas y administración</h4><p>Clientes, oportunidades, estimados y documentos. Es lo primero que el equipo adopta.</p></div>
@@ -1249,7 +1250,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
     </div>
     <div class="price-grid">
       <div class="card pc main rv">
-        <div class="tagline"><span>Plataforma CRM operativa</span><em><svg class="i"><use href="#i-clock"/></svg>Entrega en 10 días</em></div>
+        <div class="tagline"><span>Plataforma CRM operativa</span><em><svg class="i"><use href="#i-clock"/></svg>Entrega en 6 días</em></div>
         <h3>CRM + App móvil + Comunicación</h3>
         <p class="desc">Desarrollo completo de la plataforma descrita en esta propuesta.</p>
         <div class="amount"><b><sup>$</sup><span data-count="585">0</span></b><span>USD · pago único de desarrollo</span></div>
@@ -1294,7 +1295,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
         <div><span>Dominio .com (1 año) · incluido</span><b>$24.00</b></div>
         <div style="color:var(--dim);font-size:13px"><span>Hosting e integraciones adicionales</span><span>Por aparte</span></div>
       </div>
-      <div class="sum"><small>Total de la propuesta</small><b><sup>$</sup><span id="totalNum">744</span></b><span>USD · entrega en 10 días</span></div>
+      <div class="sum"><small>Total de la propuesta</small><b><sup>$</sup><span id="totalNum">744</span></b><span>USD · entrega en 6 días</span></div>
     </div>
 
     <div class="card pay rv">
@@ -1302,7 +1303,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
       <div class="pay-bar"><i class="a"></i><i class="b"></i></div>
       <div class="pay-grid">
         <div class="pp"><span class="pct">60%</span><div><b>Anticipo</b><span>Al aprobar la propuesta, antes de iniciar el desarrollo.</span></div><strong>$<span id="pay60">446.40</span></strong></div>
-        <div class="pp"><span class="pct b">40%</span><div><b>Saldo final</b><span>Al entregar la plataforma funcionando, en el día 10.</span></div><strong>$<span id="pay40">297.60</span></strong></div>
+        <div class="pp"><span class="pct b">40%</span><div><b>Saldo final</b><span>Al entregar la plataforma funcionando, en el día 6.</span></div><strong>$<span id="pay40">297.60</span></strong></div>
       </div>
     </div>
 
@@ -1334,13 +1335,14 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
     <div class="next">
       <div class="card nx rv"><span class="k">01</span><b>Aprobación</b><span>Prime Glass confirma la propuesta y el alcance elegido, con o sin sitio web.</span></div>
       <div class="card nx rv" style="--d:.1s"><span class="k">02</span><b>Información inicial</b><span>Logo, servicios, lista de precios, usuarios y formato de estimado actual.</span></div>
-      <div class="card nx rv" style="--d:.2s"><span class="k">03</span><b>Inicio de los 10 días</b><span>Kickoff y comienzo del desarrollo con avances visibles durante todo el proceso.</span></div>
+      <div class="card nx rv" style="--d:.2s"><span class="k">03</span><b>Inicio de los 6 días</b><span>Kickoff y comienzo del desarrollo con avances visibles durante todo el proceso.</span></div>
     </div>
     <div class="closing rv">
       <div class="beam"></div>
-      <span class="eyebrow">Prime Glass Solutions LLC</span>
+      <div class="by"><span class="plogo lg"><img src="assets/dgp-logo.png" alt="DGP Global Group" width="206" height="240"></span><span class="amp"><svg class="i"><use href="#i-x"/></svg></span><span class="plogo lg"><img src="assets/moya-logo.png" alt="Moya &amp; Company" width="240" height="174"></span></div>
+      <span class="eyebrow">Para Prime Glass Solutions LLC</span>
       <h2>Que el equipo trabaje <em class="gtext">conectado</em>, desde la oficina hasta la obra.</h2>
-      <p class="lead">Una plataforma hecha a la medida de su operación, entregada en 10 días por DGP Global Group y Moya Company.</p>
+      <p class="lead">Una plataforma hecha a la medida de su operación, entregada en 6 días por DGP Global Group y Moya Company.</p>
       <div class="row">
         <a class="btn btn-p" href="#inversion">Revisar inversión<svg class="i"><use href="#i-arrow"/></svg></a>
         <button class="btn btn-g" onclick="window.print()"><svg class="i"><use href="#i-download"/></svg>Descargar propuesta</button>
@@ -1353,9 +1355,9 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 <footer>
   <div class="wrap foot">
     <div class="partners">
-      <div class="partner"><svg><use href="#m-dgp"/></svg><div><b>DGP Global Group</b><small>Desarrollo</small></div></div>
+      <div class="partner"><span class="plogo"><img src="assets/dgp-logo.png" alt="DGP Global Group" width="206" height="240"></span><div><b>DGP Global Group</b><small>Desarrollo</small></div></div>
       <span class="x"><svg class="i"><use href="#i-x"/></svg></span>
-      <div class="partner"><svg><use href="#m-moya"/></svg><div><b>Moya Company</b><small>Desarrollo</small></div></div>
+      <div class="partner"><span class="plogo"><img src="assets/moya-logo.png" alt="Moya &amp; Company" width="240" height="174"></span><div><b>Moya Company</b><small>Desarrollo</small></div></div>
     </div>
     <p>Propuesta preparada para Prime Glass Solutions LLC · 22 de octubre de 2026. Los ejemplos de clientes, montos y datos mostrados son ilustrativos.</p>
   </div>

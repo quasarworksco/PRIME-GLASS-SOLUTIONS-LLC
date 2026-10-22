@@ -1,0 +1,1538 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Propuesta Prime Glass</title>
+<meta name="description" content="Propuesta comercial de DGP Global Group y Moya Company para Prime Glass Solutions LLC: plataforma CRM operativa, app móvil y sitio web.">
+<meta name="theme-color" content="#05080F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05070B;--bg2:#0B0F17;--bg3:#111723;
+  --line:rgba(148,178,220,.12);--line2:rgba(148,178,220,.22);
+  --text:#F5F8FD;--muted:#A9B6C9;--dim:#7F8DA3;
+  --cyan:#4F8BFF;--blue:#2F6BFF;--violet:#9DBBFF;--green:#4F8BFF;--amber:#E6ECF5;--rose:#7F8BA0;
+  --glass:rgba(255,255,255,.035);--glass2:rgba(255,255,255,.065);
+  --grad:var(--blue);
+  --r:22px;--maxw:1200px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --display:"Sora",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+::selection{background:rgba(79,139,255,.3)}
+
+/* ---------- Ambient background ---------- */
+.ambient{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;will-change:transform}
+@keyframes drift1{50%{transform:translate(180px,140px) scale(1.15)}}
+@keyframes drift2{50%{transform:translate(-160px,-120px) scale(.9)}}
+@keyframes drift3{50%{transform:translate(120px,-160px) scale(1.1)}}
+.gridbg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%);opacity:.5}
+.grain{position:fixed;inset:-50%;z-index:-1;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 8s steps(8) infinite}
+@keyframes grain{25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-2%)}}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+section{position:relative;padding:120px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.eyebrow .num{color:var(--dim)}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--cyan)}
+h1,h2,h3,h4{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-height:1.08}
+h2{font-size:clamp(34px,5vw,58px);margin:18px 0 18px;max-width:900px}
+h2 em,h1 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:0}
+.lead{font-size:clamp(16px,1.6vw,19px);color:var(--muted);max-width:720px}
+.gtext{color:var(--cyan)}
+@keyframes shine{to{background-position:200% 0}}
+.head{margin-bottom:64px}
+
+/* glass card */
+.card{position:relative;background:rgba(255,255,255,.028);transition:border-color .4s,background .4s;border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;isolation:isolate}
+.card:hover{border-color:rgba(79,139,255,.45);background:rgba(79,139,255,.04)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(34px);filter:blur(6px);transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none;filter:none}
+
+/* ---------- Nav ---------- */
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--grad);z-index:60}
+nav.top{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;width:min(calc(100% - 32px),1100px);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 12px 10px 18px;border-radius:999px;background:rgba(8,13,24,.62);border:1px solid var(--line);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);animation:navIn 1s var(--ease) .3s both}
+@keyframes navIn{from{opacity:0;transform:translate(-50%,-30px)}}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.02em;white-space:nowrap}
+.brand svg{width:26px;height:26px}
+.navlinks{display:flex;gap:2px}
+.navlinks a{font-size:13px;color:var(--muted);padding:8px 12px;border-radius:999px;transition:color .3s,background .3s}
+.navlinks a:hover,.navlinks a.on{color:var(--text);background:var(--glass2)}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--display);font-weight:500;font-size:14px;padding:12px 20px;border-radius:999px;transition:transform .3s var(--ease),box-shadow .3s,background .3s;white-space:nowrap}
+.btn svg{width:16px;height:16px;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translateX(3px)}
+.btn-p{background:var(--text);color:#05070B;box-shadow:0 0 0 0 rgba(79,139,255,.4)}
+.btn-p:hover{box-shadow:0 10px 40px -8px rgba(79,139,255,.6);transform:translateY(-2px)}
+.btn-g{border:1px solid var(--line2);background:var(--glass)}
+.btn-g:hover{background:var(--glass2);transform:translateY(-2px)}
+.btn-sm{padding:9px 16px;font-size:13px}
+
+/* ---------- Hero ---------- */
+.hero{min-height:100vh;min-height:100svh;padding:150px 0 90px;display:flex;align-items:center}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 8px;border-radius:999px;border:1px solid var(--line2);background:var(--glass);font-size:13px;color:var(--muted)}
+.pill b{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;font-weight:500;color:#fff;background:var(--cyan);padding:3px 10px;border-radius:999px;font-size:12px}
+.pill b svg{width:13px;height:13px}
+.hero h1{font-size:clamp(40px,5.6vw,74px);margin:26px 0 24px}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}
+.hero h1 .w>span{display:inline-block;transform:translateY(105%);animation:wordUp 1.1s var(--ease) forwards;animation-delay:calc(.35s + var(--i)*.08s)}
+@keyframes wordUp{to{transform:none}}
+.fade-in{opacity:0;animation:fadeUp 1s var(--ease) forwards;animation-delay:var(--d,1s)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.hero .lead{margin-bottom:34px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:46px}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.meta div{background:rgba(7,12,22,.85);padding:16px 18px}
+.meta small{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.meta strong{font-family:var(--display);font-weight:500;font-size:15px}
+.meta strong.big{font-size:22px}
+
+/* hero mock */
+.stage{position:relative;perspective:1400px}
+.mock{transform-style:preserve-3d;transform:rotateY(-12deg) rotateX(6deg);transition:transform .6s var(--ease);border-radius:20px;background:#0B111C;border:1px solid var(--line2);box-shadow:0 60px 120px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.03) inset,0 0 80px -20px rgba(79,139,255,.25);overflow:hidden;opacity:0;animation:mockIn 1.4s var(--ease) .6s forwards}
+@keyframes mockIn{from{opacity:0;transform:rotateY(-25deg) rotateX(14deg) translateY(60px) scale(.94)}to{opacity:1}}
+.mock-bar{display:flex;align-items:center;gap:7px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.mock-bar i{width:10px;height:10px;border-radius:50%;background:#2A3650}
+
+.mock-bar span{margin-left:10px;font-family:var(--mono);font-size:11px;color:var(--dim)}
+.mock-body{display:grid;grid-template-columns:52px 1fr;min-height:360px}
+.mock-side{border-right:1px solid var(--line);padding:14px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.mock-side span{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;color:var(--dim);font-size:15px}
+.mock-side span.on{background:rgba(79,139,255,.12);color:var(--cyan)}
+.mock-main{padding:16px}
+.mock-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.mock-title b{font-family:var(--display);font-weight:600;font-size:14px}
+.mock-title em{font-style:normal;font-size:11px;color:var(--dim);font-family:var(--mono)}
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.col h5{font-family:var(--mono);font-weight:400;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;display:flex;justify-content:space-between}
+.kc{background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:10px;padding:9px;margin-bottom:7px;font-size:10.5px;line-height:1.35}
+.kc b{display:block;font-weight:500;font-size:11px;margin-bottom:4px}
+.kc .tg{display:inline-block;font-size:9px;padding:2px 6px;border-radius:5px;margin-top:6px}
+.tg.c{background:rgba(79,139,255,.14);color:var(--cyan)}.tg.v{background:rgba(157,187,255,.16);color:var(--violet)}.tg.g{background:rgba(79,139,255,.14);color:var(--green)}.tg.a{background:rgba(255,255,255,.14);color:var(--amber)}
+.kc.moving{animation:moveCard 7s var(--ease) infinite;position:relative;z-index:2}
+@keyframes moveCard{0%,18%{transform:none;box-shadow:none}28%{transform:translate(0,-6px) rotate(-2deg);box-shadow:0 18px 30px -10px rgba(0,0,0,.6)}48%,80%{transform:translate(calc(100% + 8px),-6px) rotate(0);box-shadow:0 0 0 1px var(--cyan)}90%,100%{transform:translate(calc(100% + 8px),0);box-shadow:none}}
+.mini-bars{display:flex;gap:6px;align-items:flex-end;height:54px;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.02)}
+.mini-bars i{flex:1;border-radius:4px 4px 1px 1px;background:var(--blue);transform-origin:bottom;animation:barPulse 3.2s ease-in-out infinite;animation-delay:calc(var(--k)*.15s)}
+@keyframes barPulse{0%,100%{transform:scaleY(.55)}50%{transform:scaleY(1)}}
+.float{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px 10px 10px;border-radius:14px;background:rgba(12,20,36,.85);border:1px solid var(--line2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 20px 50px -15px rgba(0,0,0,.7);font-size:12px;white-space:nowrap;opacity:0;animation:fadeUp .9s var(--ease) forwards,bob 6s ease-in-out infinite;animation-delay:var(--d),calc(var(--d) + 1s)}
+.float .ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:16px}
+.float small{display:block;color:var(--dim);font-size:10.5px}
+.float.f1{top:-22px;right:-14px;--d:1.6s}.float.f1 .ic{background:rgba(79,139,255,.15);color:var(--green)}
+.float.f2{bottom:70px;left:-40px;--d:1.9s}.float.f2 .ic{background:rgba(79,139,255,.15);color:var(--cyan)}
+.float.f3{bottom:-22px;right:30px;--d:2.2s}.float.f3 .ic{background:rgba(157,187,255,.16);color:var(--violet)}
+@keyframes bob{50%{translate:0 -8px}}
+.shard{position:absolute;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none;animation:shard 14s ease-in-out infinite}
+.shard.s1{width:120px;height:160px;top:-60px;left:-50px;clip-path:polygon(20% 0,100% 15%,80% 100%,0 70%);--r:-14deg}
+.shard.s2{width:90px;height:110px;bottom:-40px;left:40%;clip-path:polygon(0 10%,100% 0,70% 100%);animation-delay:-5s;--r:18deg}
+@keyframes shard{0%,100%{transform:rotate(var(--r)) translateY(0)}50%{transform:rotate(calc(var(--r)*-1)) translateY(-18px)}}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);padding:22px 0;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.mq{display:flex;gap:56px;width:max-content;animation:mq 40s linear infinite}
+.mq span{display:inline-flex;align-items:center;gap:14px;font-family:var(--display);font-size:20px;color:var(--muted);white-space:nowrap}
+.mq span svg{color:var(--cyan);width:18px;height:18px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- Principles ---------- */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pcard{padding:30px}
+.pcard .ico{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:24px;color:var(--cyan);background:rgba(79,139,255,.12);border:1px solid rgba(79,139,255,.25);margin-bottom:22px}
+.pcard h3{font-size:21px;margin-bottom:10px}
+.pcard p{color:var(--muted);font-size:15.5px}
+.before-after{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:stretch;margin-top:26px}
+.ba{padding:28px}
+.ba h4{font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px}
+.ba.bad h4{color:var(--rose)}.ba.good h4{color:var(--green)}
+.ba ul{list-style:none;display:grid;gap:12px}
+.ba li{display:flex;gap:12px;align-items:flex-start;color:var(--muted);font-size:15px}
+.ba li svg{margin-top:4px;font-size:15px}
+.ba.bad li svg{color:var(--rose)}.ba.good li svg{color:var(--green)}
+.ba.good li{color:var(--text)}
+.ba-arrow{display:grid;place-items:center;color:var(--cyan);font-size:28px}
+.ba-arrow span{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line2);background:var(--glass);animation:spinGlow 4s linear infinite}
+@keyframes spinGlow{0%,100%{box-shadow:0 0 0 0 rgba(79,139,255,.4)}50%{box-shadow:0 0 0 14px rgba(79,139,255,0)}}
+
+/* ---------- Modules ---------- */
+.mods{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.mod{padding:26px;display:flex;flex-direction:column;min-height:100%;transition:transform .5s var(--ease)}
+.mod:hover{transform:translateY(-6px)}
+.mod .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}
+.mod .ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:22px;color:var(--c,var(--cyan));background:color-mix(in srgb,var(--c,var(--cyan)) 13%,transparent);border:1px solid color-mix(in srgb,var(--c,var(--cyan)) 30%,transparent);transition:transform .6s var(--ease)}
+.mod:hover .ico{transform:rotate(-8deg) scale(1.08)}
+.mod .n{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.mod h3{font-size:18px;margin-bottom:12px}
+.mod ul{list-style:none;display:grid;gap:7px}
+.mod li{position:relative;padding-left:16px;font-size:14.5px;color:var(--muted);line-height:1.45}
+.mod li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:2px;background:var(--c,var(--cyan));opacity:.7;transform:rotate(45deg)}
+
+/* ---------- Flow ---------- */
+.flow{padding:44px 34px 38px}
+.steps{position:relative;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.track{position:absolute;top:31px;left:6.25%;right:6.25%;height:2px;background:var(--line2);border-radius:2px;overflow:hidden}
+.track i{position:absolute;inset:0;transform-origin:0 50%;transform:scaleX(var(--p,0));background:var(--grad);transition:transform .9s var(--ease);box-shadow:0 0 20px var(--cyan)}
+.step{position:relative;text-align:center;z-index:1}
+.step .dot{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;font-size:24px;color:var(--dim);background:var(--bg2);border:1px solid var(--line2);transition:all .6s var(--ease);position:relative}
+.step .dot::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--cyan);opacity:0;transform:scale(.8);transition:all .6s var(--ease)}
+.step.done .dot{color:var(--cyan);border-color:rgba(79,139,255,.5);background:#0F1A2E}
+.step.now .dot{color:#fff;background:var(--cyan);box-shadow:0 0 40px -4px var(--cyan);transform:scale(1.08)}
+.step.now .dot::after{opacity:1;transform:scale(1);animation:ring 1.6s ease-out infinite}
+@keyframes ring{to{transform:scale(1.5);opacity:0}}
+.step small{font-family:var(--mono);font-size:10.5px;color:var(--dim);letter-spacing:.1em}
+.step h4{font-size:14.5px;margin:4px 0 6px;font-weight:500}
+.step p{font-size:13px;color:var(--muted);line-height:1.45;padding:0 4px}
+.flow-detail{margin-top:34px;padding-top:26px;border-top:1px solid var(--line);display:flex;gap:18px;align-items:center;min-height:74px}
+.flow-detail .badge{flex:none;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:rgba(79,139,255,.12);color:var(--cyan);font-size:20px}
+.flow-detail b{font-family:var(--display);font-weight:500;display:block;margin-bottom:2px}
+.flow-detail span{color:var(--muted);font-size:14px}
+.flow-detail .txt{transition:opacity .4s,transform .4s}
+.flow-detail .txt.swap{opacity:0;transform:translateY(8px)}
+
+/* ---------- Estimates ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.doc{background:#F6F8FB;color:#0D1626;border-radius:18px;padding:28px;box-shadow:0 40px 90px -30px rgba(0,0,0,.85);position:relative;overflow:hidden;font-size:13px}
+.doc::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--grad)}
+.doc-h{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:22px}
+.doc-logo{display:flex;align-items:center;gap:10px}
+.doc-logo svg{width:34px;height:34px}
+.doc-logo b{font-family:var(--display);font-size:14px;display:block;line-height:1.1}
+.doc-logo small{font-size:10.5px;color:#6A778C}
+.doc-no{text-align:right}
+.doc-no b{font-family:var(--display);font-size:20px;letter-spacing:-.02em;display:block}
+.doc-no small{font-family:var(--mono);font-size:11px;color:#6A778C}
+.doc-to{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:14px;border-radius:12px;background:#EBEFF5;margin-bottom:18px}
+.doc-to small{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#6A778C;margin-bottom:2px}
+.doc table{width:100%;border-collapse:collapse}
+.doc th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#6A778C;font-weight:500;text-align:left;padding:8px 0;border-bottom:1px solid #D9E0EA}
+.doc td{padding:10px 0;border-bottom:1px solid #E6EBF2;vertical-align:top}
+.doc td:last-child,.doc th:last-child{text-align:right}
+.doc td small{display:block;color:#6A778C;font-size:11px}
+.doc tr.row{opacity:0;transform:translateX(-10px);transition:all .6s var(--ease)}
+.doc.in tr.row{opacity:1;transform:none}
+.doc tr.row:nth-child(2){transition-delay:.15s}.doc tr.row:nth-child(3){transition-delay:.3s}.doc tr.row:nth-child(4){transition-delay:.45s}
+.doc-tot{margin-left:auto;width:min(260px,100%);margin-top:14px;display:grid;gap:6px}
+.doc-tot div{display:flex;justify-content:space-between}
+.doc-tot .t{border-top:2px solid #0D1626;padding-top:8px;margin-top:4px;font-family:var(--display);font-weight:600;font-size:17px}
+.doc-foot{margin-top:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;font-size:11px;color:#6A778C}
+.sign{width:150px;border-top:1px solid #9AA6B8;padding-top:4px;text-align:center;position:relative}
+.sign svg{position:absolute;bottom:18px;left:10px;width:130px;height:40px;stroke:#2D5BFF;stroke-width:2;fill:none;stroke-dasharray:320;stroke-dashoffset:320;transition:stroke-dashoffset 2s ease 1.2s}
+.in .sign svg{stroke-dashoffset:0}
+.stamp{position:absolute;right:24px;top:118px;border:2px solid #2F6BFF;color:#2F6BFF;font-family:var(--display);font-weight:700;font-size:13px;letter-spacing:.12em;padding:6px 12px;border-radius:8px;transform:rotate(-10deg) scale(2);opacity:0;transition:all .5s cubic-bezier(.3,1.6,.5,1)}
+.stamp.on{opacity:.9;transform:rotate(-10deg) scale(1)}
+.mail{padding:0}
+.mail-h{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line)}
+.mail-h b{font-family:var(--display);font-weight:500;font-size:14px;display:flex;align-items:center;gap:8px}
+.mail-h b svg{color:var(--cyan)}
+.mail-row{display:flex;gap:10px;padding:11px 18px;border-bottom:1px solid var(--line);font-size:13.5px}
+.mail-row span:first-child{color:var(--dim);width:58px;flex:none}
+.mail-body{padding:18px;min-height:132px;font-size:14px;color:var(--muted);line-height:1.65}
+.caret{display:inline-block;width:2px;height:1.05em;background:var(--cyan);vertical-align:-2px;margin-left:1px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.attach{display:inline-flex;align-items:center;gap:10px;margin:0 18px 16px;padding:9px 12px;border-radius:12px;background:var(--glass2);border:1px solid var(--line);font-size:12.5px}
+.attach .pdf{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:rgba(255,255,255,.15);color:var(--rose);font-size:14px}
+.attach small{display:block;color:var(--dim);font-size:11px}
+.mail-f{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-top:1px solid var(--line);flex-wrap:wrap}
+.sendbtn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--cyan);color:#fff;font-family:var(--display);font-weight:600;font-size:13px;transition:all .4s var(--ease);position:relative;overflow:hidden}
+.sendbtn svg{width:15px;height:15px;transition:transform .6s var(--ease)}
+.sendbtn.go svg{transform:translate(40px,-40px)}
+.sendbtn.sent{background:var(--green)}
+.status{display:flex;gap:6px;flex-wrap:wrap}
+.status span{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--dim);transition:all .5s var(--ease)}
+.status span svg{width:12px;height:12px}
+.status span.on{color:var(--green);border-color:rgba(79,139,255,.4);background:rgba(79,139,255,.08)}
+.feat-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.fl{display:flex;gap:12px;padding:16px;border-radius:16px;border:1px solid var(--line);background:var(--glass);font-size:14px}
+.fl svg{font-size:19px;color:var(--cyan);margin-top:2px}
+.fl b{display:block;font-family:var(--display);font-weight:500;font-size:14.5px;margin-bottom:2px}
+.fl span{color:var(--muted);font-size:14px;line-height:1.45}
+
+/* ---------- Comms ---------- */
+.comms{display:grid;grid-template-columns:1fr 1.1fr;gap:24px}
+.call{padding:30px;text-align:center}
+.avatar{position:relative;width:96px;height:96px;margin:18px auto 18px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:30px;background:var(--blue);color:#fff}
+.avatar i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--cyan);animation:ripple 2.4s ease-out infinite;opacity:0}
+.avatar i:nth-child(2){animation-delay:.8s}.avatar i:nth-child(3){animation-delay:1.6s}
+@keyframes ripple{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+.call small{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.call h4{font-size:22px;margin:4px 0 4px}
+.call p{color:var(--muted);font-size:13.5px}
+.call-btns{display:flex;justify-content:center;gap:28px;margin:26px 0 22px}
+.cb{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-size:24px;color:#fff;transition:transform .3s}
+.cb:hover{transform:scale(1.1)}
+.cb.no{background:#3A4458;transform:rotate(135deg)}.cb.no:hover{transform:rotate(135deg) scale(1.1)}
+.cb.yes{background:#2F6BFF;animation:jiggle 1.6s ease-in-out infinite}
+@keyframes jiggle{0%,60%,100%{transform:rotate(0)}65%{transform:rotate(-14deg)}70%{transform:rotate(14deg)}75%{transform:rotate(-10deg)}80%{transform:rotate(8deg)}85%{transform:rotate(0)}}
+.ctx{text-align:left;border:1px solid var(--line);border-radius:14px;padding:14px;background:rgba(0,0,0,.18);font-size:13px;display:grid;gap:8px}
+.ctx div{display:flex;justify-content:space-between;gap:10px}
+.ctx span{color:var(--dim)}
+.team{display:grid;gap:10px;margin-bottom:16px}
+.tm{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--glass)}
+.tm .av{position:relative;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:13px;flex:none}
+.tm .av::after{content:"";position:absolute;right:-3px;bottom:-3px;width:11px;height:11px;border-radius:50%;border:2px solid var(--bg2);background:var(--s,var(--green))}
+.tm .who{flex:1;min-width:0}
+.tm .who b{display:block;font-weight:500;font-size:14px}
+.tm .who span{font-size:12px;color:var(--dim)}
+.tm .acts{display:flex;gap:6px}
+.tm .acts span{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;border:1px solid var(--line);color:var(--muted);font-size:15px;transition:all .3s}
+.tm:hover .acts span{color:var(--cyan);border-color:rgba(79,139,255,.35)}
+.chat{padding:18px;display:grid;gap:10px}
+.chat-h{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:4px;font-size:13px}
+.chat-h b{font-family:var(--display);font-weight:500;font-size:14px}
+.chat-h span{color:var(--dim);font-family:var(--mono);font-size:11px}
+.msg{max-width:82%;padding:10px 14px;border-radius:16px;font-size:13.5px;line-height:1.45;opacity:0;transform:translateY(10px) scale(.97);transition:all .6s var(--ease)}
+.msg small{display:block;font-size:10.5px;color:var(--dim);margin-bottom:2px}
+.msg.l{background:var(--glass2);border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.r{margin-left:auto;background:#13264D;border:1px solid rgba(79,139,255,.25);border-bottom-right-radius:4px}
+.msg.r small{color:rgba(234,241,251,.6)}
+.msg .ph{display:flex;gap:6px;margin-top:8px}
+.msg .ph i{width:56px;height:42px;border-radius:8px;background:#1C3156;position:relative;overflow:hidden}
+.msg .ph i::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);transform:translateX(-100%);animation:sheen 3s ease-in-out infinite}
+.in .msg{opacity:1;transform:none}
+.in .msg:nth-child(3){transition-delay:.4s}.in .msg:nth-child(4){transition-delay:.9s}.in .msg:nth-child(5){transition-delay:1.4s}
+.typing{display:inline-flex;gap:4px;padding:12px 14px;border-radius:16px;background:var(--glass2);border:1px solid var(--line);width:max-content;opacity:0;transition:opacity .5s 2s}
+.in .typing{opacity:1}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:dots 1.2s ease-in-out infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dots{0%,60%,100%{transform:none;opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+@keyframes sheen{60%,100%{transform:translateX(100%)}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid var(--line2);background:var(--glass);font-size:13px;color:var(--muted)}
+.chip svg{color:var(--cyan);font-size:15px}
+
+/* ---------- Mobile app ---------- */
+.app{display:grid;grid-template-columns:auto 1fr;gap:70px;align-items:center}
+.phone{position:relative;width:300px;height:610px;border-radius:48px;padding:12px;background:#1A1F2A;box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 60px 120px -30px rgba(0,0,0,.9),0 0 90px -30px rgba(79,139,255,.4);animation:phoneFloat 7s ease-in-out infinite}
+@keyframes phoneFloat{50%{transform:translateY(-14px) rotate(1deg)}}
+.screen{position:relative;height:100%;border-radius:38px;overflow:hidden;background:#070B12}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:96px;height:28px;border-radius:20px;background:#000;z-index:5}
+.sb{display:flex;justify-content:space-between;padding:14px 26px 0;font-size:12px;font-weight:600;font-family:var(--display)}
+.sb span:last-child{display:flex;gap:5px;align-items:center}
+.sb span:last-child svg{width:14px;height:14px}
+.scr{position:absolute;inset:48px 0 64px;padding:14px 16px;opacity:0;transform:translateX(30px);transition:all .7s var(--ease);pointer-events:none}
+.scr.on{opacity:1;transform:none}
+.scr.out{opacity:0;transform:translateX(-30px)}
+.scr h5{font-family:var(--display);font-size:22px;font-weight:600;margin-bottom:2px}
+.scr .sub{font-size:12px;color:var(--dim);margin-bottom:14px}
+.job{border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:9px;background:var(--glass);font-size:12px}
+.job .r1{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.job b{font-size:13px;font-weight:500}
+.job .ad{color:var(--dim);display:flex;align-items:center;gap:5px}
+.job .ad svg{width:12px;height:12px}
+.prog{height:6px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden;margin:10px 0 14px}
+.prog i{display:block;height:100%;width:0;background:var(--grad);border-radius:6px;transition:width 1.4s var(--ease) .3s}
+.scr.on .prog i{width:62%}
+.chk{display:flex;align-items:center;gap:10px;font-size:12.5px;padding:8px 0;border-bottom:1px solid var(--line)}
+.chk i{width:18px;height:18px;border-radius:6px;border:1.5px solid var(--line2);display:grid;place-items:center;flex:none;font-size:11px}
+.chk.ok i{background:var(--green);border-color:var(--green);color:#fff}
+.chk.ok span{color:var(--dim);text-decoration:line-through}
+.upl{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:14px;background:var(--cyan);color:#fff;font-weight:600;font-size:13px;font-family:var(--display)}
+.upl svg{width:16px;height:16px}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.thumbs i{aspect-ratio:1;border-radius:10px;background:#1C3156;position:relative;overflow:hidden}
+.thumbs i::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);transform:translateX(-100%);animation:sheen 3s ease-in-out infinite}
+.thumbs i:nth-child(2){background:#24406E}.thumbs i:nth-child(3){background:#162847}
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:64px;display:flex;justify-content:space-around;align-items:center;border-top:1px solid var(--line);background:rgba(7,12,22,.9);font-size:20px;color:var(--dim)}
+.tabbar span.on{color:var(--cyan)}
+.home-ind{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:110px;height:4px;border-radius:4px;background:rgba(255,255,255,.4)}
+.install{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
+.ins{padding:20px;position:relative}
+.ins .k{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.12em}
+.ins b{display:block;font-family:var(--display);font-weight:500;margin:8px 0 4px;font-size:15px}
+.ins span{font-size:14px;color:var(--muted)}
+.ins .appicon{width:46px;height:46px;border-radius:13px;background:#0B1A33;border:1px solid rgba(79,139,255,.35);display:grid;place-items:center;margin-bottom:12px;box-shadow:0 10px 30px -10px rgba(79,139,255,.5)}
+.ins .appicon svg{width:28px;height:28px}
+.ins .glyph{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin-bottom:12px;background:var(--glass2);border:1px solid var(--line);font-size:20px;color:var(--muted)}
+
+/* ---------- Roles ---------- */
+.matrix{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.matrix table{width:100%;border-collapse:separate;border-spacing:0;min-width:640px}
+.matrix th,.matrix td{padding:16px 18px;text-align:center;border-bottom:1px solid var(--line);font-size:15px}
+.matrix th{font-family:var(--display);font-weight:500;font-size:14px;vertical-align:bottom}
+.matrix th .ri{display:grid;place-items:center;width:40px;height:40px;margin:0 auto 8px;border-radius:12px;font-size:19px;background:var(--glass2);border:1px solid var(--line);color:var(--c)}
+.matrix td:first-child,.matrix th:first-child{text-align:left;color:var(--muted)}
+.matrix tbody tr{transition:background .3s}
+.matrix tbody tr:hover{background:rgba(255,255,255,.025)}
+.lv{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;font-size:15px;transform:scale(0);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.in .lv{transform:none}
+.lv.f{background:rgba(79,139,255,.14);color:var(--green)}
+.lv.r{background:rgba(79,139,255,.12);color:var(--cyan)}
+.lv.o{background:rgba(255,255,255,.14);color:var(--amber)}
+.lv.x{background:rgba(255,255,255,.04);color:var(--dim)}
+.legend{display:flex;flex-wrap:wrap;gap:18px;padding:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend .lv{transform:none;width:24px;height:24px;font-size:12px}
+
+/* ---------- Dashboard ---------- */
+.dash{padding:26px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.kpi{padding:16px;border-radius:16px;border:1px solid var(--line);background:rgba(0,0,0,.18);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c)}
+.kpi small{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.kpi b{display:block;font-family:var(--display);font-weight:600;font-size:clamp(18px,2vw,24px);letter-spacing:-.02em;margin-top:4px}
+.kpi .bar{height:4px;border-radius:4px;background:rgba(255,255,255,.06);margin-top:12px;overflow:hidden}
+.kpi .bar i{display:block;height:100%;width:0;background:var(--c);border-radius:4px;transition:width 1.6s var(--ease) .3s}
+.in .kpi .bar i{width:var(--w)}
+.dgrid{display:grid;grid-template-columns:1.6fr 1fr;gap:12px}
+.panel{border:1px solid var(--line);border-radius:16px;padding:18px;background:rgba(0,0,0,.18)}
+.panel h5{font-family:var(--display);font-weight:500;font-size:14px;display:flex;justify-content:space-between;margin-bottom:16px}
+.panel h5 span{font-family:var(--mono);font-size:11px;color:var(--dim);font-weight:400}
+.chart{display:flex;align-items:flex-end;gap:14px;height:180px;padding-top:10px;border-bottom:1px solid var(--line)}
+.chart .g{flex:1;display:flex;gap:4px;align-items:flex-end;height:100%;position:relative}
+.chart .g i{flex:1;border-radius:6px 6px 2px 2px;height:var(--h);transform:scaleY(0);transform-origin:bottom;transition:transform 1.2s var(--ease);transition-delay:calc(var(--k)*.08s + .2s)}
+.in .chart .g i{transform:scaleY(1)}
+.chart .g i.a{background:var(--blue)}
+.chart .g i.b{background:#9DBBFF}
+.chart .g i:hover{filter:brightness(1.3)}
+.months{display:flex;gap:14px;margin-top:8px}
+.months span{flex:1;text-align:center;font-family:var(--mono);font-size:10.5px;color:var(--dim)}
+.lg{display:flex;gap:14px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.lg span{display:inline-flex;align-items:center;gap:6px}
+.lg span::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--c)}
+.funnel{display:grid;gap:8px}
+.fn{position:relative;height:36px;border-radius:10px;background:rgba(255,255,255,.03);overflow:hidden;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:12.5px}
+.fn i{position:absolute;left:0;top:0;bottom:0;width:0;background:color-mix(in srgb,var(--c) 20%,transparent);border-right:2px solid var(--c);transition:width 1.4s var(--ease);transition-delay:calc(var(--k)*.12s + .3s)}
+.in .fn i{width:var(--w)}
+.fn span{position:relative;z-index:1}
+.fn span:last-child{font-family:var(--mono);color:var(--muted)}
+.note{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:14px;display:flex;align-items:center;gap:8px}
+.note svg{font-size:13px}
+
+/* ---------- Timeline ---------- */
+.tl{position:relative;display:grid;gap:14px}
+.tl::before{content:"";position:absolute;left:31px;top:10px;bottom:10px;width:2px;background:var(--line2)}
+.tl .fill{position:absolute;left:31px;top:10px;width:2px;height:calc(var(--tp,0) * (100% - 20px));background:var(--grad);box-shadow:0 0 14px var(--cyan);transition:height .2s linear}
+.day{position:relative;display:grid;grid-template-columns:64px 1fr;gap:22px;align-items:start}
+.day .dn{position:relative;z-index:1;width:64px;height:64px;border-radius:20px;display:grid;place-items:center;text-align:center;background:var(--bg2);border:1px solid var(--line2);font-family:var(--display);line-height:1;transition:all .6s var(--ease)}
+.day .dn small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--dim);margin-bottom:3px}
+.day .dn b{font-size:20px;font-weight:600}
+.day.lit .dn{border-color:rgba(79,139,255,.6);background:#0F1A2E;box-shadow:0 0 30px -8px rgba(79,139,255,.6)}
+.day .dc{padding:20px 22px}
+.day .dc h4{font-size:17px;font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.day .dc h4 .tag{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.08em;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--cyan)}
+.day .dc p{font-size:15px;color:var(--muted)}
+.day.final .dn{background:var(--cyan);color:#fff;border-color:var(--cyan)}
+.day.final .dn small{color:#fff;opacity:.6}
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.stg{padding:24px}
+.stg .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--violet)}
+.stg h4{font-size:17px;font-weight:500;margin:8px 0 6px}
+.stg p{font-size:14.5px;color:var(--muted)}
+
+/* ---------- Website ---------- */
+.web-top{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;margin-bottom:50px}
+.addon{display:flex;align-items:center;gap:16px;padding:18px 22px;border-radius:20px;border:1px solid rgba(157,187,255,.35);background:rgba(79,139,255,.08)}
+.addon small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--violet)}
+.addon b{font-family:var(--display);font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.addon b sup{font-size:.45em;vertical-align:.9em;margin-right:2px}
+.browser{border-radius:18px;overflow:hidden;border:1px solid var(--line2);background:#0A1120;box-shadow:0 60px 120px -40px rgba(0,0,0,.9),0 0 80px -30px rgba(157,187,255,.35)}
+.bbar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+.bbar i{width:10px;height:10px;border-radius:50%;background:#2A3650}
+.bbar .url{flex:1;margin-left:12px;max-width:380px;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:8px;background:rgba(255,255,255,.04);font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.bbar .url svg{width:12px;height:12px;color:var(--green)}
+.site{height:480px;overflow:hidden;position:relative}
+.site-in{animation:scrollSite 22s ease-in-out infinite}
+@keyframes scrollSite{0%,12%{transform:translateY(0)}30%,42%{transform:translateY(-440px)}60%,72%{transform:translateY(-880px)}88%,100%{transform:translateY(0)}}
+.s-nav{display:flex;justify-content:space-between;align-items:center;padding:16px 26px;font-size:11.5px;color:var(--muted)}
+.s-nav b{font-family:var(--display);color:var(--text);font-size:13px;display:flex;align-items:center;gap:8px}
+.s-nav b svg{width:20px;height:20px}
+.s-nav nav{display:flex;gap:16px;align-items:center}
+.s-nav nav em{font-style:normal;padding:6px 12px;border-radius:999px;background:var(--cyan);color:#fff;font-weight:600}
+.s-hero{height:400px;margin:0 16px;border-radius:16px;position:relative;overflow:hidden;background:#0B1A33;display:flex;flex-direction:column;justify-content:center;padding:0 36px}
+.s-hero .pane{position:absolute;right:40px;top:40px;width:180px;height:300px;border-radius:6px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);backdrop-filter:blur(4px);transform:rotate(6deg)}
+.s-hero .pane.b{right:150px;top:80px;width:140px;height:240px;transform:rotate(-8deg);opacity:.7}
+.s-hero small{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--cyan);text-transform:uppercase}
+.s-hero h6{font-family:var(--display);font-size:34px;font-weight:600;line-height:1.05;margin:10px 0 12px;max-width:340px;letter-spacing:-.02em}
+.s-hero p{font-size:12px;color:var(--muted);max-width:300px;margin-bottom:18px}
+.s-hero .b2{display:flex;gap:8px}
+.s-hero .b2 span{padding:8px 14px;border-radius:999px;font-size:11px;font-weight:600;background:var(--text);color:#05070B;display:inline-flex;gap:6px;align-items:center}
+.s-hero .b2 span+span{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--line2)}
+.s-hero .b2 svg{width:12px;height:12px}
+.s-sec{padding:30px 26px 10px}
+.s-sec h6{font-family:var(--display);font-size:20px;font-weight:600;margin-bottom:14px}
+.s-svc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.s-svc div{padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--glass);font-size:11px;color:var(--muted)}
+.s-svc div svg{display:block;width:20px;height:20px;color:var(--cyan);margin-bottom:8px}
+.s-svc div b{display:block;color:var(--text);font-size:12px;font-weight:500;margin-bottom:2px}
+.s-gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:90px 90px;gap:8px}
+.s-gal i{border-radius:10px;background:#1C3156;position:relative;overflow:hidden}
+.s-gal i:first-child{grid-row:span 2;background:#24406E}
+.s-gal i:nth-child(3){background:#162847}
+.s-gal i:nth-child(4){background:#2A4A7E}
+.s-gal i::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.25) 50%,transparent 60%);transform:translateX(-100%);animation:sheen 4s ease-in-out infinite}
+.s-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.s-form .f{display:grid;gap:8px}
+.s-form .f span{height:30px;border-radius:8px;border:1px solid var(--line2);background:rgba(255,255,255,.03);font-size:10.5px;color:var(--dim);display:flex;align-items:center;padding:0 10px}
+.s-form .f span.big{height:60px;align-items:flex-start;padding-top:8px}
+.s-form .f em{font-style:normal;height:32px;border-radius:8px;background:var(--cyan);color:#fff;font-weight:600;font-size:11px;display:grid;place-items:center}
+.s-form .crm{padding:14px;border-radius:12px;border:1px dashed rgba(79,139,255,.4);font-size:11px;color:var(--muted);display:grid;gap:8px}
+.s-form .crm b{color:var(--cyan);font-weight:500;display:flex;align-items:center;gap:6px}
+.s-form .crm b svg{width:14px;height:14px}
+.s-rev{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.s-rev div{padding:14px;border-radius:12px;background:var(--glass);border:1px solid var(--line);font-size:11px;color:var(--muted)}
+.s-rev .st{display:flex;gap:2px;color:var(--amber);margin-bottom:6px}
+.s-rev .st svg{width:11px;height:11px;fill:currentColor}
+.wa{position:absolute;right:18px;bottom:18px;width:44px;height:44px;border-radius:50%;background:#2F6BFF;display:grid;place-items:center;color:#fff;box-shadow:0 10px 30px -6px rgba(47,107,255,.7);animation:jiggle 3s ease-in-out infinite;z-index:3}
+.wa svg{width:22px;height:22px}
+.web-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
+.wf{padding:20px}
+.wf .ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:19px;color:var(--violet);background:rgba(157,187,255,.12);border:1px solid rgba(157,187,255,.28);margin-bottom:14px}
+.wf b{display:block;font-family:var(--display);font-weight:500;font-size:15px;margin-bottom:4px}
+.wf span{font-size:14px;color:var(--muted);line-height:1.45;display:block}
+
+/* ---------- Pricing ---------- */
+.price-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:20px;align-items:stretch}
+.pc{padding:34px;display:flex;flex-direction:column}
+.pc.main{border-color:rgba(79,139,255,.35);background:rgba(47,107,255,.07)}
+.pc .tagline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.pc .tagline span{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.pc .tagline em{font-style:normal;display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:5px 12px;border-radius:999px;background:rgba(79,139,255,.12);color:var(--cyan)}
+.pc .tagline em svg{width:13px;height:13px}
+.pc h3{font-size:24px;margin-bottom:6px}
+.pc .desc{color:var(--muted);font-size:14.5px;margin-bottom:24px}
+.amount{display:flex;align-items:flex-end;gap:10px;margin-bottom:26px}
+.amount b{font-family:var(--display);font-weight:600;font-size:clamp(56px,7vw,84px);letter-spacing:-.04em;line-height:.9}
+.amount b sup{font-size:.4em;vertical-align:1.25em;margin-right:4px;color:var(--muted);font-weight:500}
+.amount>span{color:var(--muted);font-size:14px;padding-bottom:8px}
+.inc{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin-bottom:10px}
+.inc li{display:flex;gap:10px;font-size:15px;align-items:flex-start}
+.inc li svg{color:var(--green);margin-top:4px;font-size:14px}
+.pc.side .amount b{font-size:clamp(48px,5.5vw,64px)}
+.pc.side{border-color:rgba(157,187,255,.3)}
+.pc.side .tagline span{color:var(--violet)}
+.toggle{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border-radius:16px;border:1px solid var(--line2);background:rgba(0,0,0,.2);cursor:pointer;user-select:none}
+.toggle b{font-family:var(--display);font-weight:500;font-size:14px}
+.toggle small{display:block;color:var(--dim);font-size:12px}
+.sw{position:relative;width:52px;height:30px;border-radius:999px;background:rgba(255,255,255,.12);transition:background .4s;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
+.toggle[aria-checked="true"] .sw{background:var(--blue)}
+.toggle[aria-checked="true"] .sw::after{transform:translateX(22px)}
+.total{margin-top:20px;padding:30px 34px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;border-color:rgba(79,139,255,.3)}
+.total .lines{display:grid;gap:8px;font-size:14.5px;color:var(--muted)}
+.total .lines div{display:flex;justify-content:space-between;gap:20px;max-width:440px}
+.total .lines div.off{opacity:.35;text-decoration:line-through}
+.total .lines b{color:var(--text);font-weight:500;font-family:var(--mono)}
+.total .sum{text-align:right}
+.total .sum small{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.total .sum b{display:block;font-family:var(--display);font-weight:600;font-size:clamp(48px,6vw,72px);letter-spacing:-.04em;line-height:1}
+.total .sum b sup{font-size:.4em;vertical-align:1.1em;color:var(--muted);margin-right:3px}
+.total .sum>span{font-size:13px;color:var(--muted)}
+.pay{margin-top:20px;padding:28px 30px}
+.pay-h{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.pay-h .k{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px}
+.pay-h b{font-family:var(--display);font-weight:500;font-size:20px}
+.pay-note{font-size:13px;color:var(--dim)}
+.pay-bar{display:flex;gap:4px;height:10px;margin-bottom:20px}
+.pay-bar i{border-radius:6px;transform:scaleX(0);transform-origin:0 50%;transition:transform 1.2s var(--ease) .3s}
+.pay-bar i.a{flex:60;background:var(--grad)}
+.pay-bar i.b{flex:40;background:#9DBBFF;transition-delay:.9s}
+.pay.in .pay-bar i{transform:none}
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pp{display:flex;align-items:center;gap:16px;padding:18px;border-radius:16px;border:1px solid var(--line);background:rgba(0,0,0,.2)}
+.pp .pct{flex:none;width:62px;height:62px;border-radius:16px;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:19px;color:#fff;background:var(--cyan)}
+.pp .pct.b{background:#fff;color:#05070B}
+.pp div{flex:1;min-width:0}
+.pp b{display:block;font-family:var(--display);font-weight:500;font-size:16px}
+.pp div span{font-size:13.5px;color:var(--muted);display:block}
+.pp strong{font-family:var(--display);font-weight:600;font-size:24px;letter-spacing:-.02em;white-space:nowrap}
+.host{margin-top:20px;padding:26px 30px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;border-color:rgba(255,255,255,.28)}
+.host-info{display:flex;gap:16px;align-items:flex-start}
+.host-info .ico{width:46px;height:46px;flex:none;border-radius:14px;display:grid;place-items:center;font-size:20px;color:var(--amber);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25)}
+.host-info .k{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:4px}
+.host-info b{display:block;font-family:var(--display);font-weight:500;font-size:17px;margin-bottom:4px}
+.host-info span:not(.k){font-size:13.5px;color:var(--muted);display:block;max-width:520px}
+.plans{display:flex;gap:12px}
+.plan{position:relative;min-width:150px;padding:18px 20px;border-radius:18px;border:1px solid var(--line2);background:rgba(0,0,0,.2);text-align:center}
+.plan small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.plan b{display:block;font-family:var(--display);font-weight:600;font-size:40px;letter-spacing:-.03em;line-height:1.1;margin:4px 0 2px}
+.plan b sup{font-size:.45em;vertical-align:.9em;color:var(--muted);margin-right:2px}
+.plan span{font-size:12.5px;color:var(--muted)}
+.plan.best{border-color:rgba(79,139,255,.6);background:rgba(79,139,255,.1)}
+.plan em{position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-style:normal;font-size:11px;font-weight:600;white-space:nowrap;padding:3px 10px;border-radius:999px;background:var(--blue);color:#fff}
+.excl{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.ex{padding:22px;display:flex;gap:14px}
+.ex .ico{width:42px;height:42px;flex:none;border-radius:12px;display:grid;place-items:center;font-size:19px;color:var(--amber);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25)}
+.ex b{display:block;font-family:var(--display);font-weight:500;font-size:15px;margin-bottom:4px}
+.ex span{font-size:14px;color:var(--muted);line-height:1.5;display:block}
+
+/* ---------- Next steps / footer ---------- */
+.next{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:60px}
+.nx{padding:26px}
+.nx .k{font-family:var(--display);font-size:46px;font-weight:300;line-height:1;color:var(--cyan)}
+.nx b{display:block;font-family:var(--display);font-weight:500;font-size:17px;margin:14px 0 6px}
+.nx span{font-size:15px;color:var(--muted)}
+.closing{text-align:center;padding:80px 30px;border-radius:32px;position:relative;overflow:hidden;border:1px solid var(--line2);background:#0A1222}
+.closing h2{margin:18px auto 18px}
+.closing .lead{margin:0 auto 34px}
+.closing .row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+.closing .beam{position:absolute;top:0;left:-40%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.06),transparent);animation:beam 7s ease-in-out infinite;pointer-events:none}
+@keyframes beam{0%{left:-40%}60%,100%{left:120%}}
+footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+.partners{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.partner{display:flex;align-items:center;gap:12px}
+.partner svg{width:38px;height:38px}
+.partner b{font-family:var(--display);font-weight:600;font-size:15px;display:block;line-height:1.1}
+.partner small{font-size:11px;color:var(--dim);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.x{color:var(--dim);font-size:18px}
+.foot p{font-size:12.5px;color:var(--dim);max-width:380px}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1080px){
+  .navlinks{display:none}
+  .hero-grid{grid-template-columns:1fr;gap:70px}
+  .stage{max-width:620px;margin:0 auto;width:100%}
+  .mods{grid-template-columns:repeat(2,1fr)}
+  .web-feats{grid-template-columns:repeat(2,1fr)}
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .app{grid-template-columns:1fr;gap:50px}
+  .phone{margin:0 auto}
+}
+@media (max-width:860px){
+  section{padding:90px 0}
+  .three,.next,.stages,.excl{grid-template-columns:1fr}
+  .before-after{grid-template-columns:1fr}
+  .ba-arrow span{transform:rotate(90deg)}
+  .split,.comms,.price-grid,.dgrid{grid-template-columns:1fr}
+  .meta{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr;gap:0}
+  .track{top:32px;bottom:32px;left:31px;right:auto;width:2px;height:auto}
+  .track i{transform-origin:50% 0;transform:scaleY(var(--p,0))}
+  .step{display:grid;grid-template-columns:64px 1fr;gap:18px;text-align:left;padding-bottom:18px;align-items:center}
+  .step .dot{margin:0}
+  .step p{padding:0}
+  .web-top{grid-template-columns:1fr}
+  .total{grid-template-columns:1fr}
+  .total .sum{text-align:left}
+  .host{grid-template-columns:1fr}
+  .pay-grid{grid-template-columns:1fr}
+  .excl{grid-template-columns:1fr!important}
+  .install{grid-template-columns:1fr}
+  .inc{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  nav.top{padding:8px 8px 8px 14px}
+  .brand span.long{display:none}
+  .pill{font-size:12px}.pill .pfor{display:none}.pill .pmob{display:inline!important}
+  .hero{padding-top:120px}
+  .float.f2{left:-6px}.float.f1{right:-4px}
+  .mods,.web-feats,.feat-list{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .kanban{grid-template-columns:repeat(3,1fr)}
+  .kanban .col:nth-child(4){display:none}
+  .mock{transform:none}
+  .flow{padding:28px 18px}
+  .doc{padding:20px}
+  .doc-to{grid-template-columns:1fr}
+  .stamp{top:96px;right:14px}
+  .s-svc{grid-template-columns:1fr 1fr}
+  .s-form,.s-rev{grid-template-columns:1fr}
+  .s-hero{padding:0 20px}.s-hero .pane{right:-30px}.s-hero .pane.b{display:none}
+  .s-hero h6{font-size:26px}
+  .s-nav nav span{display:none}
+  .phone{width:280px;height:570px}
+  .pc,.total,.host,.pay{padding:24px}
+  .pp{flex-wrap:wrap}.pp strong{width:100%;text-align:right}
+  .plans{flex-direction:column}.plan{min-width:0}
+  .closing{padding:56px 20px}
+  .day{grid-template-columns:52px 1fr;gap:14px}
+  .day .dn{width:52px;height:52px;border-radius:16px}
+  .tl::before,.tl .fill{left:25px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rv{opacity:1;transform:none;filter:none}
+  .site-in{animation:none}
+}
+@media print{
+  :root{--bg:#fff;--text:#0D1626;--muted:#44526A;--dim:#6A778C;--line:#DDE3EC;--line2:#C9D2DF;--glass:#fff;--glass2:#F4F6FA}
+  body{background:#fff}
+  .ambient,.grain,nav.top,.progress,.marquee,.float,.shard,.hero-cta,.closing .row,.toggle{display:none!important}
+  section{padding:40px 0;break-inside:avoid-page}
+  .rv{opacity:1!important;transform:none!important;filter:none!important}
+  .card{background:#fff!important;backdrop-filter:none;box-shadow:none}
+  .gtext{color:#1F4FD8;background:none}
+  .mock,.phone,.browser{box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<!-- SVG icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="lg-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F8BFF"/><stop offset="1" stop-color="#4F8BFF"/></linearGradient>
+    <linearGradient id="lg-warm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+  </defs>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></symbol>
+  <symbol id="i-filecheck" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 15 2 2 4-4"/></symbol>
+  <symbol id="i-calc" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></symbol>
+  <symbol id="i-hardhat" viewBox="0 0 24 24"><path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"/><path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M4 15v-3a6 6 0 0 1 6-6M14 6a6 6 0 0 1 6 6v3"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+  <symbol id="i-mobile" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0z"/><path d="m14.5 12.5 2-2M11.5 9.5l2-2M8.5 6.5l2-2M17.5 15.5l2-2"/></symbol>
+  <symbol id="i-userplus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5M9 8V2M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-sync" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2z"/><path d="M19 3v4M17 5h4"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="m16 6-4-4-4 4M12 2v13"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></symbol>
+  <symbol id="i-signal" viewBox="0 0 24 24"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16"/></symbol>
+  <symbol id="i-battery" viewBox="0 0 24 24"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2M6 11v2"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5H3v7h4c0 4-2 6-4 6zM14 21c3 0 7-1 7-8V5h-7v7h4c0 4-2 6-4 6z"/></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="1"/><path d="M5 22h14M9 6l6 6M9 10l4 4"/><path d="M16 12h.01"/></symbol>
+  <symbol id="i-window" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M12 3v18M3 12h18M6 6l3 3"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></symbol>
+  <symbol id="i-handshake" viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8"/></symbol>
+
+  <!-- brand marks -->
+  <symbol id="m-prime" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11" fill="#0B1A30" stroke="url(#lg-glass)" stroke-width="1.5"/><path d="M12 29V11h9a6 6 0 0 1 0 12h-9" fill="none" stroke="url(#lg-glass)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 11l6-4M27 17l5-3" stroke="#EAF1FB" stroke-opacity=".55" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="m-dgp" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11" fill="#0B1A30" stroke="url(#lg-glass)" stroke-width="1.5"/><circle cx="20" cy="20" r="9" fill="none" stroke="url(#lg-glass)" stroke-width="2.2"/><ellipse cx="20" cy="20" rx="4" ry="9" fill="none" stroke="#EAF1FB" stroke-opacity=".6" stroke-width="1.3"/><path d="M11 20h18" stroke="#EAF1FB" stroke-opacity=".6" stroke-width="1.3"/></symbol>
+  <symbol id="m-moya" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11" fill="#0B1A30" stroke="url(#lg-warm)" stroke-width="1.5"/><path d="M10 28V13l10 10 10-10v15" fill="none" stroke="url(#lg-warm)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="ambient" aria-hidden="true"><div class="gridbg"></div></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress"></div>
+
+<nav class="top" aria-label="Secciones">
+  <a class="brand" href="#inicio"><svg><use href="#m-prime"/></svg><span>Prime Glass <span class="long">· Propuesta</span></span></a>
+  <div class="navlinks">
+    <a href="#modulos">Módulos</a>
+    <a href="#flujo">Flujo</a>
+    <a href="#estimados">Estimados</a>
+    <a href="#movil">App móvil</a>
+    <a href="#entrega">Entrega</a>
+    <a href="#web">Sitio web</a>
+    <a href="#inversion">Inversión</a>
+  </div>
+  <a class="btn btn-p btn-sm" href="#inversion">Ver inversión<svg class="i"><use href="#i-arrow"/></svg></a>
+</nav>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="pill fade-in" style="--d:.2s"><b><svg class="i"><use href="#i-spark"/></svg>Propuesta comercial</b><span class="pfor">Para Prime Glass Solutions LLC</span><span class="pmob" style="display:none">Prime Glass</span></div>
+      <h1>
+        <span class="w"><span style="--i:0">Una</span></span>
+        <span class="w"><span style="--i:1">sola</span></span>
+        <span class="w"><span style="--i:2">plataforma</span></span>
+        <span class="w"><span style="--i:3">para</span></span>
+        <span class="w"><span style="--i:4">mover</span></span>
+        <span class="w"><span style="--i:5"><em class="gtext">todo</em></span></span>
+        <span class="w"><span style="--i:6">Prime</span></span>
+        <span class="w"><span style="--i:7">Glass.</span></span>
+      </h1>
+      <p class="lead fade-in" style="--d:1.1s">Más que un CRM de ventas: un sistema que conecta clientes, proyectos, oficina, cuadrillas de campo, documentos y finanzas. Diseñado para un equipo que nunca ha usado un CRM, sencillo de operar y desplegado por etapas.</p>
+      <div class="hero-cta fade-in" style="--d:1.3s">
+        <a class="btn btn-p" href="#modulos">Explorar la propuesta<svg class="i"><use href="#i-arrow"/></svg></a>
+        <button class="btn btn-g" onclick="window.print()"><svg class="i"><use href="#i-printer"/></svg>Guardar en PDF</button>
+      </div>
+      <div class="meta fade-in" style="--d:1.5s">
+        <div><small>Preparado para</small><strong>Prime Glass Solutions LLC</strong></div>
+        <div><small>Preparado por</small><strong>DGP Global Group &amp; Moya Company</strong></div>
+        <div><small>Entrega</small><strong class="big"><span data-count="10">0</span> días</strong></div>
+        <div><small>Inversión</small><strong class="big">$<span data-count="585">0</span></strong></div>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="shard s1"></div><div class="shard s2"></div>
+      <div class="mock" id="mock">
+        <div class="mock-bar"><i></i><i></i><i></i><span>app.primeglass / proyectos</span></div>
+        <div class="mock-body">
+          <div class="mock-side">
+            <span class="on"><svg class="i"><use href="#i-grid"/></svg></span>
+            <span><svg class="i"><use href="#i-users"/></svg></span>
+            <span><svg class="i"><use href="#i-briefcase"/></svg></span>
+            <span><svg class="i"><use href="#i-file"/></svg></span>
+            <span><svg class="i"><use href="#i-msg"/></svg></span>
+            <span><svg class="i"><use href="#i-chart"/></svg></span>
+          </div>
+          <div class="mock-main">
+            <div class="mock-title"><b>Tablero de proyectos</b><em>Hoy · 8:42 AM</em></div>
+            <div class="kanban">
+              <div class="col"><h5>Leads <span>4</span></h5>
+                <div class="kc"><b>Oficinas Coral</b>Divisiones de vidrio<span class="tg c">Medición</span></div>
+                <div class="kc"><b>Casa Herrera</b>Espejos baño<span class="tg c">Nuevo</span></div>
+              </div>
+              <div class="col"><h5>Cotización <span>3</span></h5>
+                <div class="kc"><b>Fam. Rodríguez</b>Puerta de ducha<span class="tg v">Enviada</span></div>
+                <div class="kc moving"><b>Plaza Norte</b>Storefront<span class="tg g">Aprobado</span></div>
+              </div>
+              <div class="col"><h5>Programado <span>2</span></h5>
+                <div class="kc"><b>Lobby Bayview</b>Ventanales<span class="tg a">Jue 9:00</span></div>
+              </div>
+              <div class="col"><h5>Instalación <span>2</span></h5>
+                <div class="kc"><b>Torre Mar</b>Barandas<span class="tg g">62%</span></div>
+              </div>
+            </div>
+            <div class="mini-bars"><i style="--k:0;height:40%"></i><i style="--k:1;height:65%"></i><i style="--k:2;height:50%"></i><i style="--k:3;height:85%"></i><i style="--k:4;height:60%"></i><i style="--k:5;height:95%"></i><i style="--k:6;height:72%"></i><i style="--k:7;height:88%"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="float f1"><span class="ic"><svg class="i"><use href="#i-filecheck"/></svg></span><div>Estimado aprobado<small>EST-1042 · $2,071.52</small></div></div>
+      <div class="float f2"><span class="ic"><svg class="i"><use href="#i-phone"/></svg></span><div>Llamada entrante<small>Cliente · Lobby Bayview</small></div></div>
+      <div class="float f3"><span class="ic"><svg class="i"><use href="#i-camera"/></svg></span><div>3 fotos subidas<small>Cuadrilla A · Torre Mar</small></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="mq">
+    <span><svg class="i"><use href="#i-users"/></svg>Clientes</span><span><svg class="i"><use href="#i-briefcase"/></svg>Proyectos</span><span><svg class="i"><use href="#i-file"/></svg>Documentos</span><span><svg class="i"><use href="#i-calc"/></svg>Estimados</span><span><svg class="i"><use href="#i-hardhat"/></svg>Cuadrillas</span><span><svg class="i"><use href="#i-phone"/></svg>Llamadas</span><span><svg class="i"><use href="#i-msg"/></svg>Chat interno</span><span><svg class="i"><use href="#i-mobile"/></svg>App móvil</span><span><svg class="i"><use href="#i-chart"/></svg>Reportes</span><span><svg class="i"><use href="#i-globe"/></svg>Sitio web</span>
+    <span><svg class="i"><use href="#i-users"/></svg>Clientes</span><span><svg class="i"><use href="#i-briefcase"/></svg>Proyectos</span><span><svg class="i"><use href="#i-file"/></svg>Documentos</span><span><svg class="i"><use href="#i-calc"/></svg>Estimados</span><span><svg class="i"><use href="#i-hardhat"/></svg>Cuadrillas</span><span><svg class="i"><use href="#i-phone"/></svg>Llamadas</span><span><svg class="i"><use href="#i-msg"/></svg>Chat interno</span><span><svg class="i"><use href="#i-mobile"/></svg>App móvil</span><span><svg class="i"><use href="#i-chart"/></svg>Reportes</span><span><svg class="i"><use href="#i-globe"/></svg>Sitio web</span>
+  </div>
+</div>
+
+<!-- ================= 01 RETO ================= -->
+<section id="reto">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">01</span> El punto de partida</span>
+      <h2 class="rv" style="--d:.1s">Hoy la información vive en <em>muchos lugares</em>. Mañana vivirá en uno.</h2>
+      <p class="lead rv" style="--d:.2s">Prime Glass necesita una plataforma que conecte a quien vende, a quien administra y a quien instala. Como es su primer CRM, lo construimos con tres principios.</p>
+    </div>
+    <div class="three">
+      <div class="card pcard rv"><div class="ico"><svg class="i"><use href="#i-zap"/></svg></div><h3>Sencillo de operar</h3><p>Pantallas limpias, pocos clics y lenguaje del negocio del vidrio. Si el equipo sabe usar WhatsApp, sabe usar esta plataforma.</p></div>
+      <div class="card pcard rv" style="--d:.1s"><div class="ico"><svg class="i"><use href="#i-layers"/></svg></div><h3>Todo conectado</h3><p>Cada cliente, estimado, foto, mensaje y factura queda enlazado a su proyecto. Nada se pierde entre correos, papeles y hojas de cálculo.</p></div>
+      <div class="card pcard rv" style="--d:.2s"><div class="ico"><svg class="i"><use href="#i-trend"/></svg></div><h3>Desplegado por etapas</h3><p>Primero la oficina, luego el campo y después las finanzas. El equipo adopta el sistema sin frenar la operación diaria.</p></div>
+    </div>
+    <div class="before-after">
+      <div class="card ba bad rv"><h4>Sin plataforma</h4><ul>
+        <li><svg class="i"><use href="#i-x"/></svg>Leads anotados en libretas o perdidos en el teléfono</li>
+        <li><svg class="i"><use href="#i-x"/></svg>Cotizaciones hechas a mano, cada una con formato distinto</li>
+        <li><svg class="i"><use href="#i-x"/></svg>Medidas y fotos dispersas en chats personales</li>
+        <li><svg class="i"><use href="#i-x"/></svg>Nadie sabe con certeza cuánto falta por cobrar</li>
+      </ul></div>
+      <div class="ba-arrow rv" style="--d:.15s"><span><svg class="i"><use href="#i-arrow"/></svg></span></div>
+      <div class="card ba good rv" style="--d:.3s"><h4>Con la plataforma</h4><ul>
+        <li><svg class="i"><use href="#i-check"/></svg>Cada lead registrado con su origen y responsable</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Estimados profesionales enviados por correo en minutos</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Medidas, planos y fotos dentro de cada proyecto</li>
+        <li><svg class="i"><use href="#i-check"/></svg>Cotizado, facturado, cobrado y pendiente en tiempo real</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 MODULOS ================= -->
+<section id="modulos">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">02</span> Qué centraliza</span>
+      <h2 class="rv" style="--d:.1s">Ocho módulos, <em>un solo</em> sistema.</h2>
+      <p class="lead rv" style="--d:.2s">Todo lo que la empresa necesita para vender, ejecutar y cobrar, organizado alrededor del cliente y del proyecto.</p>
+    </div>
+    <div class="mods">
+      <article class="card mod rv" style="--c:#4F8BFF"><div class="top"><div class="ico"><svg class="i"><use href="#i-users"/></svg></div><span class="n">01</span></div><h3>Clientes y oportunidades</h3><ul><li>Contactos y empresas</li><li>Solicitudes entrantes</li><li>Cotizaciones por cliente</li><li>Seguimiento y recordatorios</li><li>Origen del lead</li></ul></article>
+      <article class="card mod rv" style="--c:#2F6BFF;--d:.06s"><div class="top"><div class="ico"><svg class="i"><use href="#i-briefcase"/></svg></div><span class="n">02</span></div><h3>Proyectos de instalación</h3><ul><li>Dirección y alcance</li><li>Medidas y materiales</li><li>Responsables y fechas</li><li>Estado, tareas y notas</li><li>Calendario de instalaciones</li></ul></article>
+      <article class="card mod rv" style="--c:#9DBBFF;--d:.12s"><div class="top"><div class="ico"><svg class="i"><use href="#i-file"/></svg></div><span class="n">03</span></div><h3>Documentos</h3><ul><li>Cotizaciones y contratos</li><li>Planos y fotos</li><li>Permisos</li><li>Órdenes de cambio</li><li>Facturas vinculadas al proyecto</li></ul></article>
+      <article class="card mod rv" style="--c:#4F8BFF;--d:.18s"><div class="top"><div class="ico"><svg class="i"><use href="#i-calc"/></svg></div><span class="n">04</span></div><h3>Precios y costos</h3><ul><li>Catálogo de materiales</li><li>Mano de obra</li><li>Subcontratos</li><li>Cambios al alcance</li><li>Margen estimado por proyecto</li></ul></article>
+      <article class="card mod rv" style="--c:#E6ECF5"><div class="top"><div class="ico"><svg class="i"><use href="#i-hardhat"/></svg></div><span class="n">05</span></div><h3>Trabajo de campo</h3><ul><li>Vista móvil para cuadrillas</li><li>Asignaciones del día</li><li>Actualización de avances</li><li>Subida de fotos y documentos</li><li>Navegación a la obra</li></ul></article>
+      <article class="card mod rv" style="--c:#7F8BA0;--d:.06s"><div class="top"><div class="ico"><svg class="i"><use href="#i-msg"/></svg></div><span class="n">06</span></div><h3>Comunicación interna</h3><ul><li>Mensajes por proyecto</li><li>Canal general de empleados</li><li>Avisos y anuncios</li><li>Llamadas de voz y video</li><li>Notificaciones</li></ul></article>
+      <article class="card mod rv" style="--c:#4F8BFF;--d:.12s"><div class="top"><div class="ico"><svg class="i"><use href="#i-shield"/></svg></div><span class="n">07</span></div><h3>Usuarios y permisos</h3><ul><li>Administración</li><li>Ventas</li><li>Gerencia</li><li>Campo</li><li>Acceso según funciones</li></ul></article>
+      <article class="card mod rv" style="--c:#2F6BFF;--d:.18s"><div class="top"><div class="ico"><svg class="i"><use href="#i-chart"/></svg></div><span class="n">08</span></div><h3>Ingresos y reportes</h3><ul><li>Cotizado y contratado</li><li>Facturado y cobrado</li><li>Saldo pendiente</li><li>Exportación para contabilidad</li><li>Tablero para gerencia</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 FLUJO ================= -->
+<section id="flujo">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">03</span> Flujo recomendado</span>
+      <h2 class="rv" style="--d:.1s">Del primer contacto al <em>último pago</em>.</h2>
+      <p class="lead rv" style="--d:.2s">Cada proyecto avanza por las mismas ocho etapas. La plataforma muestra en qué punto está cada uno y quién es responsable del siguiente paso.</p>
+    </div>
+    <div class="card flow rv" id="flow">
+      <div class="steps">
+        <div class="track"><i id="trackFill"></i></div>
+        <div class="step"><div class="dot"><svg class="i"><use href="#i-userplus"/></svg></div><div><small>01</small><h4>Lead</h4><p>Entra la solicitud con su origen</p></div></div>
+        <div class="step"><div class="dot"><svg class="i"><use href="#i-ruler"/></svg></div><div><small>02</small><h4>Visita y medición</h4><p>Medidas y fotos en sitio</p></div></div>
+        <div class="step"><div class="dot"><svg class="i"><use href="#i-calc"/></svg></div><div><small>03</small><h4>Cotización</h4><p>Estimado desde la plantilla</p></div></div>
+        <div class="step"><div class="dot"><svg class="i"><use href="#i-filecheck"/></svg></div><div><small>04</small><h4>Aprobación</h4><p>El cliente acepta por enlace</p></div></div>
+        <div class="step"><div class="dot"><svg class="i"><use href="#i-calendar"/></svg></div><div><small>05</small><h4>Programado</h4><p>Fecha y cuadrilla asignadas</p></div></div>
+        <div class="step"><div class="dot"><svg class="i"><use href="#i-wrench"/></svg></div><div><small>06</small><h4>Instalación</h4><p>Avance y fotos desde el móvil</p></div></div>
+        <div class="step"><div class="dot"><svg class="i"><use href="#i-flag"/></svg></div><div><small>07</small><h4>Cierre</h4><p>Revisión final y conformidad</p></div></div>
+        <div class="step"><div class="dot"><svg class="i"><use href="#i-receipt"/></svg></div><div><small>08</small><h4>Factura y cobro</h4><p>Saldo al día en reportes</p></div></div>
+      </div>
+      <div class="flow-detail"><div class="badge" id="fdIcon"><svg class="i"><use href="#i-userplus"/></svg></div><div class="txt" id="fdTxt"><b>Lead</b><span>El contacto llega por teléfono, sitio web o referido. Se registra con su origen y se asigna a un vendedor con recordatorio de seguimiento.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 ESTIMADOS ================= -->
+<section id="estimados">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">04</span> Plantilla de estimados</span>
+      <h2 class="rv" style="--d:.1s">Estimados profesionales, <em>enviados</em> desde la plataforma.</h2>
+      <p class="lead rv" style="--d:.2s">El CRM incluye una plantilla de estimados con la marca de Prime Glass. Se arma con el catálogo de precios, se genera en PDF y se envía por correo al cliente sin salir del sistema.</p>
+    </div>
+    <div class="split" id="estDemo">
+      <div class="doc rv">
+        <div class="stamp" id="stamp">APROBADO</div>
+        <div class="doc-h">
+          <div class="doc-logo"><svg><use href="#m-prime"/></svg><div><b>PRIME GLASS<br>SOLUTIONS LLC</b><small>Vidrio · Espejos · Instalación</small></div></div>
+          <div class="doc-no"><small>ESTIMADO</small><b>EST-1042</b><small>22 oct 2026</small></div>
+        </div>
+        <div class="doc-to">
+          <div><small>Cliente</small><b>Familia Rodríguez</b><br>cliente@correo.com</div>
+          <div><small>Proyecto</small><b>Puerta de ducha frameless</b><br>Baño principal</div>
+        </div>
+        <table>
+          <thead><tr><th>Descripción</th><th>Cant.</th><th>Importe</th></tr></thead>
+          <tbody>
+            <tr class="row"><td>Vidrio templado 3/8" claro<small>Corte a medida, cantos pulidos</small></td><td>42 ft²</td><td>$1,176.00</td></tr>
+            <tr class="row"><td>Herrajes acero inoxidable<small>Bisagras, jaladera y sellos</small></td><td>1 kit</td><td>$310.00</td></tr>
+            <tr class="row"><td>Instalación y sellado<small>Cuadrilla de 2 técnicos</small></td><td>1</td><td>$450.00</td></tr>
+            <tr class="row"><td>Visita técnica y medición<small>Incluida</small></td><td>1</td><td>$0.00</td></tr>
+          </tbody>
+        </table>
+        <div class="doc-tot">
+          <div><span>Subtotal</span><span>$1,936.00</span></div>
+          <div><span>Impuesto (7%)</span><span>$135.52</span></div>
+          <div class="t"><span>Total</span><span>$2,071.52</span></div>
+        </div>
+        <div class="doc-foot">
+          <span>Vigencia y términos configurables<br>Ejemplo ilustrativo</span>
+          <div class="sign"><svg viewBox="0 0 130 40"><path d="M4 30c8-14 14-22 18-18s-6 20 2 16 10-22 16-20-4 18 4 16 8-14 14-12 2 10 8 8 12-10 18-8 6 6 14 2 12-6 16-6"/></svg>Firma del cliente</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card mail rv" style="--d:.15s">
+          <div class="mail-h"><b><svg class="i"><use href="#i-mail"/></svg>Enviar estimado</b><span class="status" id="mailStatus"><span data-s="0"><svg class="i"><use href="#i-send"/></svg>Enviado</span><span data-s="1"><svg class="i"><use href="#i-eye"/></svg>Abierto</span><span data-s="2"><svg class="i"><use href="#i-check"/></svg>Aprobado</span></span></div>
+          <div class="mail-row"><span>Para</span><span>cliente@correo.com</span></div>
+          <div class="mail-row"><span>Asunto</span><span>Su estimado EST-1042 · Prime Glass Solutions</span></div>
+          <div class="mail-body"><span id="typed"></span><span class="caret"></span></div>
+          <div class="attach"><span class="pdf"><svg class="i"><use href="#i-file"/></svg></span><div>EST-1042.pdf<small>Generado automáticamente · 184 KB</small></div></div>
+          <div class="mail-f"><span style="font-size:12.5px;color:var(--dim);display:flex;align-items:center;gap:8px"><svg class="i"><use href="#i-link"/></svg>Incluye enlace de aprobación en línea</span><span class="sendbtn" id="sendBtn"><svg class="i"><use href="#i-send"/></svg><span>Enviar</span></span></div>
+        </div>
+        <div class="feat-list">
+          <div class="fl rv"><svg class="i"><use href="#i-layout"/></svg><div><b>Plantilla con su marca</b><span>Logo, colores, términos y condiciones de Prime Glass.</span></div></div>
+          <div class="fl rv" style="--d:.06s"><svg class="i"><use href="#i-calc"/></svg><div><b>Cálculo automático</b><span>Partidas, impuestos, descuentos y totales sin errores.</span></div></div>
+          <div class="fl rv" style="--d:.12s"><svg class="i"><use href="#i-send"/></svg><div><b>Envío por correo</b><span>PDF adjunto y mensaje listo, desde la ficha del cliente.</span></div></div>
+          <div class="fl rv" style="--d:.18s"><svg class="i"><use href="#i-sync"/></svg><div><b>De estimado a proyecto</b><span>Al aprobarse, se convierte en proyecto con un clic.</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 COMUNICACION ================= -->
+<section id="comunicacion">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">05</span> Llamadas y comunicación</span>
+      <h2 class="rv" style="--d:.1s">Llamar, atender y <em>hablar entre todos</em>, en la misma app.</h2>
+      <p class="lead rv" style="--d:.2s">El equipo se comunica dentro de la plataforma: llamadas de voz y video entre compañeros, atención de llamadas de clientes y chat por proyecto. Cada conversación queda ligada a su cliente.</p>
+    </div>
+    <div class="comms">
+      <div class="card call rv">
+        <small>Llamada entrante</small>
+        <div class="avatar"><i></i><i></i><i></i>LM</div>
+        <h4>Laura Méndez</h4>
+        <p>Cliente · Lobby Bayview</p>
+        <div class="call-btns"><span class="cb no" aria-label="Rechazar"><svg class="i"><use href="#i-phone"/></svg></span><span class="cb yes" aria-label="Contestar"><svg class="i"><use href="#i-phone"/></svg></span></div>
+        <div class="ctx">
+          <div><span>Proyecto activo</span><b>Ventanales del lobby</b></div>
+          <div><span>Etapa</span><b>Programado · Jue 9:00</b></div>
+          <div><span>Último estimado</span><b>EST-1038 · Aprobado</b></div>
+        </div>
+      </div>
+      <div class="rv" style="--d:.15s">
+        <div class="team">
+          <div class="tm"><span class="av" style="background:rgba(79,139,255,.15);color:var(--cyan)">AG</span><div class="who"><b>Andrea G.</b><span>Ventas · En línea</span></div><div class="acts"><span><svg class="i"><use href="#i-phone"/></svg></span><span><svg class="i"><use href="#i-video"/></svg></span><span><svg class="i"><use href="#i-msg"/></svg></span></div></div>
+          <div class="tm"><span class="av" style="background:rgba(255,255,255,.15);color:var(--amber);--s:var(--amber)">CR</span><div class="who"><b>Carlos R.</b><span>Cuadrilla A · En obra</span></div><div class="acts"><span><svg class="i"><use href="#i-phone"/></svg></span><span><svg class="i"><use href="#i-video"/></svg></span><span><svg class="i"><use href="#i-msg"/></svg></span></div></div>
+        </div>
+        <div class="card chat">
+          <div class="chat-h"><b># torre-mar-barandas</b><span>Chat del proyecto</span></div>
+          <div class="msg l"><small>Carlos R. · 10:14</small>Terminamos el nivel 3. Faltan 4 paneles del nivel 4.<div class="ph"><i></i><i></i><i></i></div></div>
+          <div class="msg r"><small>Gerencia · 10:16</small>Excelente. Actualizo el avance al 62% y aviso al cliente.</div>
+          <div class="msg l"><small>Andrea G. · 10:18</small>El cliente pidió una orden de cambio para el pasamanos. La subo al proyecto.</div>
+          <div class="typing"><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip rv"><svg class="i"><use href="#i-phone"/></svg>Llamadas entre usuarios</span>
+      <span class="chip rv" style="--d:.05s"><svg class="i"><use href="#i-video"/></svg>Videollamadas</span>
+      <span class="chip rv" style="--d:.1s"><svg class="i"><use href="#i-headset"/></svg>Atención de llamadas de clientes</span>
+      <span class="chip rv" style="--d:.15s"><svg class="i"><use href="#i-clock"/></svg>Historial de llamadas por cliente</span>
+      <span class="chip rv" style="--d:.2s"><svg class="i"><use href="#i-msg"/></svg>Chat por proyecto</span>
+      <span class="chip rv" style="--d:.25s"><svg class="i"><use href="#i-bell"/></svg>Avisos generales y notificaciones</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 MOVIL ================= -->
+<section id="movil">
+  <div class="wrap app">
+    <div class="phone rv" aria-hidden="true">
+      <div class="screen">
+        <div class="notch"></div>
+        <div class="sb"><span>9:41</span><span><svg class="i"><use href="#i-signal"/></svg><svg class="i"><use href="#i-battery"/></svg></span></div>
+        <div class="scr on" data-scr>
+          <h5>Hoy</h5><div class="sub">Cuadrilla A · 3 asignaciones</div>
+          <div class="job"><div class="r1"><b>Torre Mar</b><span class="tg g">En curso</span></div><div class="ad"><svg class="i"><use href="#i-pin"/></svg>Barandas · Nivel 4</div></div>
+          <div class="job"><div class="r1"><b>Lobby Bayview</b><span class="tg a">1:30 PM</span></div><div class="ad"><svg class="i"><use href="#i-pin"/></svg>Ventanales · Medición final</div></div>
+          <div class="job"><div class="r1"><b>Fam. Rodríguez</b><span class="tg c">4:00 PM</span></div><div class="ad"><svg class="i"><use href="#i-pin"/></svg>Puerta de ducha</div></div>
+          <div class="job" style="border-style:dashed;text-align:center;color:var(--dim)">Ver calendario semanal</div>
+        </div>
+        <div class="scr" data-scr>
+          <h5>Torre Mar</h5><div class="sub">Barandas de vidrio · Avance</div>
+          <div class="prog"><i></i></div>
+          <div class="chk ok"><i><svg class="i"><use href="#i-check"/></svg></i><span>Retirar protección nivel 3</span></div>
+          <div class="chk ok"><i><svg class="i"><use href="#i-check"/></svg></i><span>Instalar paneles nivel 3</span></div>
+          <div class="chk"><i></i><span>Instalar paneles nivel 4</span></div>
+          <div class="chk"><i></i><span>Pasamanos (orden de cambio)</span></div>
+          <div class="upl"><svg class="i"><use href="#i-camera"/></svg>Subir fotos</div>
+          <div class="thumbs"><i></i><i></i><i></i></div>
+        </div>
+        <div class="scr" data-scr>
+          <h5>Equipo</h5><div class="sub">Mensajes y llamadas</div>
+          <div class="msg l" style="opacity:1;transform:none;max-width:90%"><small>Gerencia</small>Mañana iniciamos a las 7:30. Confirmen material.</div>
+          <div class="msg r" style="opacity:1;transform:none;max-width:90%"><small>Cuadrilla A</small>Confirmado, ya cargamos el vidrio.</div>
+          <div class="job" style="display:flex;align-items:center;gap:10px;margin-top:10px"><span class="av" style="width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(79,139,255,.15);color:var(--cyan)"><svg class="i"><use href="#i-phone"/></svg></span><div><b>Llamar a oficina</b><div class="ad">Un toque, desde la app</div></div></div>
+        </div>
+        <div class="tabbar"><span class="on" data-tab><svg class="i"><use href="#i-home"/></svg></span><span data-tab><svg class="i"><use href="#i-briefcase"/></svg></span><span data-tab><svg class="i"><use href="#i-msg"/></svg></span><span><svg class="i"><use href="#i-user"/></svg></span></div>
+        <div class="home-ind"></div>
+      </div>
+    </div>
+    <div>
+      <span class="eyebrow rv"><span class="num">06</span> Versión móvil</span>
+      <h2 class="rv" style="--d:.1s">Una app en la <em>pantalla de inicio</em>, sin tiendas.</h2>
+      <p class="lead rv" style="--d:.2s">La plataforma se instala como app en iPhone y Android directamente desde el navegador. Las cuadrillas ven sus asignaciones, actualizan avances, suben fotos y se comunican con la oficina desde la obra.</p>
+      <div class="install">
+        <div class="card ins rv"><div class="glyph"><svg class="i"><use href="#i-link"/></svg></div><span class="k">PASO 1</span><b>Abrir el enlace</b><span>Desde el celular, en Safari o Chrome.</span></div>
+        <div class="card ins rv" style="--d:.1s"><div class="glyph"><svg class="i"><use href="#i-share"/></svg></div><span class="k">PASO 2</span><b>Agregar a inicio</b><span>Una opción del menú de compartir.</span></div>
+        <div class="card ins rv" style="--d:.2s"><div class="appicon"><svg><use href="#m-prime"/></svg></div><span class="k">PASO 3</span><b>Listo</b><span>Ícono propio, pantalla completa y notificaciones.</span></div>
+      </div>
+      <div class="chips">
+        <span class="chip rv"><svg class="i"><use href="#i-calendar"/></svg>Asignaciones del día</span>
+        <span class="chip rv" style="--d:.05s"><svg class="i"><use href="#i-camera"/></svg>Fotos desde la cámara</span>
+        <span class="chip rv" style="--d:.1s"><svg class="i"><use href="#i-pin"/></svg>Navegación a la obra</span>
+        <span class="chip rv" style="--d:.15s"><svg class="i"><use href="#i-bell"/></svg>Notificaciones push</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 ROLES ================= -->
+<section id="roles">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">07</span> Usuarios y permisos</span>
+      <h2 class="rv" style="--d:.1s">Cada persona ve <em>lo que necesita</em>.</h2>
+      <p class="lead rv" style="--d:.2s">Cuatro perfiles con acceso según sus funciones. La cuadrilla no ve márgenes; ventas no modifica facturación; gerencia lo ve todo.</p>
+    </div>
+    <div class="card rv">
+      <div class="matrix">
+        <table>
+          <thead><tr>
+            <th>Módulo</th>
+            <th><span class="ri" style="--c:var(--cyan)"><svg class="i"><use href="#i-building"/></svg></span>Administración</th>
+            <th><span class="ri" style="--c:var(--violet)"><svg class="i"><use href="#i-handshake"/></svg></span>Ventas</th>
+            <th><span class="ri" style="--c:var(--green)"><svg class="i"><use href="#i-gauge"/></svg></span>Gerencia</th>
+            <th><span class="ri" style="--c:var(--amber)"><svg class="i"><use href="#i-hardhat"/></svg></span>Campo</th>
+          </tr></thead>
+          <tbody id="matrix"></tbody>
+        </table>
+      </div>
+      <div class="legend">
+        <span><i class="lv f"><svg class="i"><use href="#i-check"/></svg></i>Acceso completo</span>
+        <span><i class="lv r"><svg class="i"><use href="#i-eye"/></svg></i>Solo lectura</span>
+        <span><i class="lv o"><svg class="i"><use href="#i-user"/></svg></i>Solo lo asignado</span>
+        <span><i class="lv x"><svg class="i"><use href="#i-lock"/></svg></i>Sin acceso</span>
+        <span style="margin-left:auto;color:var(--dim)">Matriz sugerida, se ajusta con la empresa al inicio.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 08 REPORTES ================= -->
+<section id="reportes">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">08</span> Ingresos y reportes</span>
+      <h2 class="rv" style="--d:.1s">El estado del negocio, <em>en una mirada</em>.</h2>
+      <p class="lead rv" style="--d:.2s">Cotizado, contratado, facturado, cobrado y pendiente, actualizados con cada movimiento. Exportables a Excel para su contador.</p>
+    </div>
+    <div class="card dash rv" id="dash">
+      <div class="kpis">
+        <div class="kpi" style="--c:var(--violet);--w:100%"><small>Cotizado</small><b>$<span data-count="184500">0</span></b><div class="bar"><i></i></div></div>
+        <div class="kpi" style="--c:var(--blue);--w:68%"><small>Contratado</small><b>$<span data-count="126300">0</span></b><div class="bar"><i></i></div></div>
+        <div class="kpi" style="--c:var(--cyan);--w:54%"><small>Facturado</small><b>$<span data-count="98750">0</span></b><div class="bar"><i></i></div></div>
+        <div class="kpi" style="--c:var(--green);--w:44%"><small>Cobrado</small><b>$<span data-count="81200">0</span></b><div class="bar"><i></i></div></div>
+        <div class="kpi" style="--c:var(--amber);--w:10%"><small>Pendiente</small><b>$<span data-count="17550">0</span></b><div class="bar"><i></i></div></div>
+      </div>
+      <div class="dgrid">
+        <div class="panel">
+          <h5>Facturado vs. cobrado <span class="lg"><span style="--c:var(--blue)">Facturado</span><span style="--c:#9DBBFF">Cobrado</span></span></h5>
+          <div class="chart">
+            <div class="g"><i class="a" style="--h:48%;--k:0"></i><i class="b" style="--h:40%;--k:1"></i></div>
+            <div class="g"><i class="a" style="--h:62%;--k:2"></i><i class="b" style="--h:55%;--k:3"></i></div>
+            <div class="g"><i class="a" style="--h:55%;--k:4"></i><i class="b" style="--h:50%;--k:5"></i></div>
+            <div class="g"><i class="a" style="--h:78%;--k:6"></i><i class="b" style="--h:66%;--k:7"></i></div>
+            <div class="g"><i class="a" style="--h:70%;--k:8"></i><i class="b" style="--h:64%;--k:9"></i></div>
+            <div class="g"><i class="a" style="--h:92%;--k:10"></i><i class="b" style="--h:74%;--k:11"></i></div>
+          </div>
+          <div class="months"><span>May</span><span>Jun</span><span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span></div>
+        </div>
+        <div class="panel">
+          <h5>Embudo de ventas <span>Oct</span></h5>
+          <div class="funnel">
+            <div class="fn" style="--c:var(--violet);--w:100%;--k:0"><i></i><span>Leads</span><span>48</span></div>
+            <div class="fn" style="--c:var(--blue);--w:72%;--k:1"><i></i><span>Visitas</span><span>35</span></div>
+            <div class="fn" style="--c:var(--cyan);--w:56%;--k:2"><i></i><span>Cotizados</span><span>27</span></div>
+            <div class="fn" style="--c:var(--green);--w:35%;--k:3"><i></i><span>Aprobados</span><span>17</span></div>
+            <div class="fn" style="--c:var(--amber);--w:27%;--k:4"><i></i><span>Instalados</span><span>13</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="note"><svg class="i"><use href="#i-info"/></svg>Datos ilustrativos. La conexión directa con su sistema contable se cotiza como integración adicional.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 09 ENTREGA ================= -->
+<section id="entrega">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">09</span> Plan de entrega</span>
+      <h2 class="rv" style="--d:.1s">Listo para operar en <em class="gtext">10 días</em>.</h2>
+      <p class="lead rv" style="--d:.2s">Un calendario claro, con avances visibles durante todo el proceso. El conteo inicia con la aprobación de la propuesta y la entrega de la información inicial.</p>
+    </div>
+    <div class="tl" id="tl">
+      <div class="fill"></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>1</b></div></div><div class="card dc"><h4>Arranque y configuración <span class="tag">KICKOFF</span></h4><p>Reunión inicial, levantamiento de procesos, marca, servicios, lista de usuarios y matriz de permisos.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍAS</small><b>2–3</b></div></div><div class="card dc"><h4>Clientes, oportunidades y proyectos</h4><p>Base de datos, tablero de oportunidades, ficha de proyecto con medidas, materiales, responsables, tareas y calendario.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>4</b></div></div><div class="card dc"><h4>Documentos y plantilla de estimados <span class="tag">CORREO</span></h4><p>Gestor de documentos por proyecto, plantilla de estimados en PDF y envío por correo con enlace de aprobación.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>5</b></div></div><div class="card dc"><h4>Precios, costos y márgenes</h4><p>Catálogo de materiales, mano de obra, subcontratos, órdenes de cambio y margen estimado por proyecto.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>6</b></div></div><div class="card dc"><h4>Comunicación y llamadas</h4><p>Chat por proyecto, canal general, avisos, llamadas de voz y video entre usuarios y atención de llamadas.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>7</b></div></div><div class="card dc"><h4>App móvil y vista de campo <span class="tag">PWA</span></h4><p>Instalación en pantalla de inicio, asignaciones, avances, fotos y notificaciones para las cuadrillas.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>8</b></div></div><div class="card dc"><h4>Permisos y reportes</h4><p>Perfiles de Administración, Ventas, Gerencia y Campo. Tablero de ingresos y exportación para contabilidad.</p></div></div>
+      <div class="day rv"><div class="dn"><div><small>DÍA</small><b>9</b></div></div><div class="card dc"><h4>Sitio web y pruebas con el equipo</h4><p>Publicación del sitio web (si se contrata), carga de datos iniciales y pruebas reales con usuarios de cada perfil.</p></div></div>
+      <div class="day final rv"><div class="dn"><div><small>DÍA</small><b>10</b></div></div><div class="card dc"><h4>Capacitación y puesta en marcha <span class="tag">ENTREGA</span></h4><p>Sesión de capacitación por perfil, guía rápida de uso y salida a producción.</p></div></div>
+    </div>
+    <div class="stages">
+      <div class="card stg rv"><span class="k">ETAPA 1 · OFICINA</span><h4>Ventas y administración</h4><p>Clientes, oportunidades, estimados y documentos. Es lo primero que el equipo adopta.</p></div>
+      <div class="card stg rv" style="--d:.1s"><span class="k">ETAPA 2 · CAMPO</span><h4>Cuadrillas en la app</h4><p>Asignaciones, avances y fotos desde la obra, con comunicación directa con la oficina.</p></div>
+      <div class="card stg rv" style="--d:.2s"><span class="k">ETAPA 3 · FINANZAS</span><h4>Facturación y reportes</h4><p>Control de facturado, cobrado y pendiente, con reportes para gerencia.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 10 WEB ================= -->
+<section id="web">
+  <div class="wrap">
+    <div class="web-top">
+      <div>
+        <span class="eyebrow rv" style="color:var(--violet)"><span class="num">10</span> Complemento opcional</span>
+        <h2 class="rv" style="--d:.1s">Un sitio web que <em>trae clientes</em> directo al CRM.</h2>
+        <p class="lead rv" style="--d:.2s">Landing page profesional para Prime Glass, rápida, adaptada a celulares y conectada a la plataforma: cada solicitud de cotización del sitio entra como lead al CRM.</p>
+      </div>
+      <div class="addon rv" style="--d:.3s"><div><small>Adicional</small><b><sup>+$</sup><span data-count="135">0</span></b></div></div>
+    </div>
+
+    <div class="browser rv">
+      <div class="bbar"><i></i><i></i><i></i><div class="url"><svg class="i"><use href="#i-lock"/></svg>primeglass.com</div></div>
+      <div class="site">
+        <div class="site-in">
+          <div class="s-nav"><b><svg><use href="#m-prime"/></svg>Prime Glass Solutions</b><nav><span>Servicios</span><span>Proyectos</span><span>Nosotros</span><span>Contacto</span><em>Cotizar</em></nav></div>
+          <div class="s-hero"><div class="pane"></div><div class="pane b"></div><small>Vidrio y espejos a la medida</small><h6>Vidrio bien instalado, de principio a fin.</h6><p>Puertas de ducha, ventanales, storefronts, barandas y espejos para hogares y negocios.</p><div class="b2"><span>Solicitar cotización</span><span><svg class="i"><use href="#i-phone"/></svg>Llamar</span></div></div>
+          <div class="s-sec"><h6>Servicios</h6><div class="s-svc">
+            <div><svg class="i"><use href="#i-door"/></svg><b>Puertas de ducha</b>Frameless y semi-frameless</div>
+            <div><svg class="i"><use href="#i-window"/></svg><b>Ventanas y ventanales</b>Residencial y comercial</div>
+            <div><svg class="i"><use href="#i-building"/></svg><b>Storefronts</b>Fachadas comerciales</div>
+            <div><svg class="i"><use href="#i-layers"/></svg><b>Barandas</b>Vidrio templado</div>
+            <div><svg class="i"><use href="#i-image"/></svg><b>Espejos</b>A la medida</div>
+            <div><svg class="i"><use href="#i-wrench"/></svg><b>Reparaciones</b>Reemplazo de vidrio</div>
+          </div></div>
+          <div class="s-sec"><h6>Proyectos recientes</h6><div class="s-gal"><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="s-sec"><h6>Lo que dicen nuestros clientes</h6><div class="s-rev">
+            <div><span class="st"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span>Espacio para reseñas reales de clientes.</div>
+            <div><span class="st"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span>Integrable con sus reseñas de Google.</div>
+          </div></div>
+          <div class="s-sec"><h6>Solicite su cotización</h6><div class="s-form">
+            <div class="f"><span>Nombre</span><span>Teléfono</span><span>Tipo de servicio</span><span class="big">Cuéntenos su proyecto</span><em>Enviar solicitud</em></div>
+            <div class="crm"><b><svg class="i"><use href="#i-zap"/></svg>Conectado al CRM</b>La solicitud se crea como lead con origen "Sitio web" y se asigna a ventas con notificación inmediata.</div>
+          </div></div>
+        </div>
+        <span class="wa"><svg class="i"><use href="#i-chat"/></svg></span>
+      </div>
+    </div>
+
+    <div class="web-feats">
+      <div class="card wf rv"><div class="ico"><svg class="i"><use href="#i-layout"/></svg></div><b>Hero y llamados a la acción</b><span>Mensaje principal, botones de cotizar y llamar visibles en todo momento.</span></div>
+      <div class="card wf rv" style="--d:.05s"><div class="ico"><svg class="i"><use href="#i-grid"/></svg></div><b>Sección de servicios</b><span>Cada línea de negocio con descripción e ícono.</span></div>
+      <div class="card wf rv" style="--d:.1s"><div class="ico"><svg class="i"><use href="#i-image"/></svg></div><b>Galería de proyectos</b><span>Trabajos realizados con fotos optimizadas.</span></div>
+      <div class="card wf rv" style="--d:.15s"><div class="ico"><svg class="i"><use href="#i-quote"/></svg></div><b>Testimonios</b><span>Reseñas de clientes que generan confianza.</span></div>
+      <div class="card wf rv"><div class="ico"><svg class="i"><use href="#i-users"/></svg></div><b>Nosotros y proceso</b><span>Quiénes son y cómo trabajan, paso a paso.</span></div>
+      <div class="card wf rv" style="--d:.05s"><div class="ico"><svg class="i"><use href="#i-help"/></svg></div><b>Preguntas frecuentes</b><span>Respuestas a las dudas comunes antes de cotizar.</span></div>
+      <div class="card wf rv" style="--d:.1s"><div class="ico"><svg class="i"><use href="#i-pin"/></svg></div><b>Área de servicio y mapa</b><span>Zonas que cubren y ubicación con Google Maps.</span></div>
+      <div class="card wf rv" style="--d:.15s"><div class="ico"><svg class="i"><use href="#i-file"/></svg></div><b>Formulario conectado</b><span>Las solicitudes llegan como leads al CRM.</span></div>
+      <div class="card wf rv"><div class="ico"><svg class="i"><use href="#i-chat"/></svg></div><b>WhatsApp y clic para llamar</b><span>Contacto inmediato desde el celular.</span></div>
+      <div class="card wf rv" style="--d:.05s"><div class="ico"><svg class="i"><use href="#i-mobile"/></svg></div><b>Diseño responsive</b><span>Perfecto en celular, tableta y computadora.</span></div>
+      <div class="card wf rv" style="--d:.1s"><div class="ico"><svg class="i"><use href="#i-search"/></svg></div><b>SEO on-page</b><span>Títulos, descripciones, datos estructurados y sitemap.</span></div>
+      <div class="card wf rv" style="--d:.15s"><div class="ico"><svg class="i"><use href="#i-zap"/></svg></div><b>Velocidad y analítica</b><span>Carga rápida y Google Analytics configurado.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 11 INVERSION ================= -->
+<section id="inversion">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">11</span> Inversión</span>
+      <h2 class="rv" style="--d:.1s">Un precio claro, <em>sin sorpresas</em>.</h2>
+      <p class="lead rv" style="--d:.2s">El valor corresponde al desarrollo del proyecto. Los servicios de terceros se pagan directamente al proveedor, según el uso real de la empresa.</p>
+    </div>
+    <div class="price-grid">
+      <div class="card pc main rv">
+        <div class="tagline"><span>Plataforma CRM operativa</span><em><svg class="i"><use href="#i-clock"/></svg>Entrega en 10 días</em></div>
+        <h3>CRM + App móvil + Comunicación</h3>
+        <p class="desc">Desarrollo completo de la plataforma descrita en esta propuesta.</p>
+        <div class="amount"><b><sup>$</sup><span data-count="585">0</span></b><span>USD · pago único de desarrollo</span></div>
+        <ul class="inc">
+          <li><svg class="i"><use href="#i-check"/></svg>Clientes y oportunidades</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Proyectos de instalación</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Gestor de documentos</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Plantilla de estimados</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Envío de estimados por correo</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Precios, costos y margen</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Vista de campo para cuadrillas</li>
+          <li><svg class="i"><use href="#i-check"/></svg>App en pantalla de inicio</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Llamadas, video y chat interno</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Avisos y notificaciones</li>
+          <li><svg class="i"><use href="#i-check"/></svg>4 perfiles de usuario y permisos</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Tablero de ingresos y reportes</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Exportación para contabilidad</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Capacitación y puesta en marcha</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Dominio .com incluido (1 año, $24)</li>
+        </ul>
+      </div>
+      <div class="card pc side rv" style="--d:.15s">
+        <div class="tagline"><span>Complemento</span></div>
+        <h3>Sitio web landing page</h3>
+        <p class="desc">Sitio profesional conectado al CRM, con todas las secciones descritas.</p>
+        <div class="amount"><b><sup>+$</sup>135</b><span>USD adicionales</span></div>
+        <ul class="inc" style="grid-template-columns:1fr">
+          <li><svg class="i"><use href="#i-check"/></svg>Diseño a la medida y responsive</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Servicios, galería, testimonios y FAQ</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Formulario que crea leads en el CRM</li>
+          <li><svg class="i"><use href="#i-check"/></svg>WhatsApp, clic para llamar y mapa</li>
+          <li><svg class="i"><use href="#i-check"/></svg>SEO on-page y Google Analytics</li>
+        </ul>
+        <div class="toggle" role="switch" aria-checked="true" tabindex="0" id="webToggle"><div><b>Incluir sitio web</b><small>Actualiza el total de la propuesta</small></div><span class="sw"></span></div>
+      </div>
+    </div>
+
+    <div class="card total rv">
+      <div class="lines">
+        <div><span>Plataforma CRM operativa</span><b>$585.00</b></div>
+        <div id="webLine"><span>Sitio web landing page</span><b>$135.00</b></div>
+        <div><span>Dominio .com (1 año) · incluido</span><b>$24.00</b></div>
+        <div style="color:var(--dim);font-size:13px"><span>Hosting e integraciones adicionales</span><span>Por aparte</span></div>
+      </div>
+      <div class="sum"><small>Total de la propuesta</small><b><sup>$</sup><span id="totalNum">744</span></b><span>USD · entrega en 10 días</span></div>
+    </div>
+
+    <div class="card pay rv">
+      <div class="pay-h"><div><span class="k">Forma de pago</span><b>60% al iniciar · 40% a la entrega</b></div><span class="pay-note">Montos sobre el total de la propuesta</span></div>
+      <div class="pay-bar"><i class="a"></i><i class="b"></i></div>
+      <div class="pay-grid">
+        <div class="pp"><span class="pct">60%</span><div><b>Anticipo</b><span>Al aprobar la propuesta, antes de iniciar el desarrollo.</span></div><strong>$<span id="pay60">446.40</span></strong></div>
+        <div class="pp"><span class="pct b">40%</span><div><b>Saldo final</b><span>Al entregar la plataforma funcionando, en el día 10.</span></div><strong>$<span id="pay40">297.60</span></strong></div>
+      </div>
+    </div>
+
+    <div class="card host rv">
+      <div class="host-info">
+        <div class="ico"><svg class="i"><use href="#i-server"/></svg></div>
+        <div><span class="k">Por aparte · Hosting</span><b>Servidor, base de datos y almacenamiento</b><span>Mantiene en línea la plataforma, la app móvil, los documentos y el sitio web. Se elige el plan que más convenga.</span></div>
+      </div>
+      <div class="plans">
+        <div class="plan"><small>Mensual</small><b><sup>$</sup>25</b><span>por mes</span></div>
+        <div class="plan best"><em>Ahorra $155</em><small>Anual</small><b><sup>$</sup>145</b><span>por año</span></div>
+      </div>
+    </div>
+
+    <div class="excl" style="grid-template-columns:repeat(2,1fr)">
+      <div class="card ex rv"><div class="ico"><svg class="i"><use href="#i-plug"/></svg></div><div><b>Integraciones adicionales</b><span>QuickBooks u otro sistema contable, firma electrónica, pagos en línea, SMS u otras que el cliente desee agregar. Se cotizan por aparte.</span></div></div>
+      <div class="card ex rv" style="--d:.1s"><div class="ico"><svg class="i"><use href="#i-cloud"/></svg></div><div><b>Servicios de terceros</b><span>Correo corporativo, número telefónico y minutos de llamadas a clientes. Se pagan al proveedor según consumo.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 12 SIGUIENTES PASOS ================= -->
+<section id="pasos" style="padding-bottom:40px">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow rv"><span class="num">12</span> Siguientes pasos</span>
+      <h2 class="rv" style="--d:.1s">Tres pasos para <em>empezar</em>.</h2>
+    </div>
+    <div class="next">
+      <div class="card nx rv"><span class="k">01</span><b>Aprobación</b><span>Prime Glass confirma la propuesta y el alcance elegido, con o sin sitio web.</span></div>
+      <div class="card nx rv" style="--d:.1s"><span class="k">02</span><b>Información inicial</b><span>Logo, servicios, lista de precios, usuarios y formato de estimado actual.</span></div>
+      <div class="card nx rv" style="--d:.2s"><span class="k">03</span><b>Inicio de los 10 días</b><span>Kickoff y comienzo del desarrollo con avances visibles durante todo el proceso.</span></div>
+    </div>
+    <div class="closing rv">
+      <div class="beam"></div>
+      <span class="eyebrow">Prime Glass Solutions LLC</span>
+      <h2>Que el equipo trabaje <em class="gtext">conectado</em>, desde la oficina hasta la obra.</h2>
+      <p class="lead">Una plataforma hecha a la medida de su operación, entregada en 10 días por DGP Global Group y Moya Company.</p>
+      <div class="row">
+        <a class="btn btn-p" href="#inversion">Revisar inversión<svg class="i"><use href="#i-arrow"/></svg></a>
+        <button class="btn btn-g" onclick="window.print()"><svg class="i"><use href="#i-download"/></svg>Descargar propuesta</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="partners">
+      <div class="partner"><svg><use href="#m-dgp"/></svg><div><b>DGP Global Group</b><small>Desarrollo</small></div></div>
+      <span class="x"><svg class="i"><use href="#i-x"/></svg></span>
+      <div class="partner"><svg><use href="#m-moya"/></svg><div><b>Moya Company</b><small>Desarrollo</small></div></div>
+    </div>
+    <p>Propuesta preparada para Prime Glass Solutions LLC · 22 de octubre de 2026. Los ejemplos de clientes, montos y datos mostrados son ilustrativos.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fmt = function(n){ return Math.round(n).toLocaleString('en-US'); };
+
+  /* ---- Role matrix ---- */
+  var L = {f:['f','i-check'],r:['r','i-eye'],o:['o','i-user'],x:['x','i-lock']};
+  var rows = [
+    ['Clientes y oportunidades','f','f','f','o'],
+    ['Estimados y precios','f','f','f','x'],
+    ['Costos y márgenes','f','r','f','x'],
+    ['Proyectos y calendario','f','r','f','o'],
+    ['Asignaciones de campo','f','x','f','o'],
+    ['Documentos y fotos','f','f','f','o'],
+    ['Comunicación interna','f','f','f','f'],
+    ['Facturación y cobros','f','r','f','x'],
+    ['Reportes financieros','f','x','f','x'],
+    ['Usuarios y configuración','f','x','r','x']
+  ];
+  var tb = document.getElementById('matrix'), h = '';
+  rows.forEach(function(r,ri){
+    h += '<tr><td>'+r[0]+'</td>';
+    for(var c=1;c<5;c++){ var l=L[r[c]]; h += '<td><i class="lv '+l[0]+'" style="transition-delay:'+(ri*.05+c*.04).toFixed(2)+'s"><svg class="i"><use href="#'+l[1]+'"/></svg></i></td>'; }
+    h += '</tr>';
+  });
+  tb.innerHTML = h;
+
+  /* ---- Reveal ---- */
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.15, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+  /* ---- Counters ---- */
+  function count(el){
+    var to = +el.dataset.count, dur = reduce ? 0 : 1600, t0 = null;
+    if(!dur){ el.textContent = fmt(to); return; }
+    function step(t){ if(!t0) t0=t; var p=Math.min((t-t0)/dur,1); el.textContent = fmt(to*(1-Math.pow(1-p,4))); if(p<1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  var cio = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ setTimeout(function(){count(e.target);}, e.target.closest('.hero')?1500:150); cio.unobserve(e.target); } });
+  },{threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(function(el){ cio.observe(el); });
+
+  /* ---- Scroll progress, nav state, timeline fill ---- */
+  var bar = document.getElementById('progress');
+  var links = [].slice.call(document.querySelectorAll('.navlinks a'));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  var tl = document.getElementById('tl'), days = [].slice.call(tl.querySelectorAll('.day'));
+  var ticking = false;
+  function onScroll(){
+    var st = window.scrollY, max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX('+(max>0?st/max:0)+')';
+    var cur = -1;
+    secs.forEach(function(s,i){ if(s && s.getBoundingClientRect().top < innerHeight*.4) cur = i; });
+    links.forEach(function(a,i){ a.classList.toggle('on', i===cur); });
+    var r = tl.getBoundingClientRect(), mid = innerHeight*.6;
+    var p = Math.max(0, Math.min(1, (mid - r.top) / r.height));
+    tl.style.setProperty('--tp', p.toFixed(3));
+    days.forEach(function(d){ d.classList.toggle('lit', d.getBoundingClientRect().top + 32 < mid); });
+    ticking = false;
+  }
+  addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
+  addEventListener('resize', onScroll);
+  onScroll();
+
+  /* ---- Card spotlight ---- */
+  document.addEventListener('pointermove', function(e){
+    var c = e.target.closest && e.target.closest('.card');
+    if(!c) return;
+    var r = c.getBoundingClientRect();
+    c.style.setProperty('--mx', (e.clientX - r.left)+'px');
+    c.style.setProperty('--my', (e.clientY - r.top)+'px');
+  });
+
+  /* ---- Hero tilt ---- */
+  var stage = document.getElementById('stage'), mock = document.getElementById('mock');
+  if(!reduce && matchMedia('(hover:hover)').matches){
+    stage.addEventListener('pointermove', function(e){
+      var r = stage.getBoundingClientRect(), x = (e.clientX-r.left)/r.width-.5, y = (e.clientY-r.top)/r.height-.5;
+      mock.style.transform = 'rotateY('+(x*14-6)+'deg) rotateX('+(-y*10+3)+'deg)';
+    });
+    stage.addEventListener('pointerleave', function(){ mock.style.transform = ''; });
+  }
+
+  /* ---- Flow pipeline ---- */
+  var steps = [].slice.call(document.querySelectorAll('.step'));
+  var fill = document.getElementById('trackFill'), fdIcon = document.getElementById('fdIcon'), fdTxt = document.getElementById('fdTxt');
+  var info = [
+    ['Lead','El contacto llega por teléfono, sitio web o referido. Se registra con su origen y se asigna a un vendedor con recordatorio de seguimiento.'],
+    ['Visita y medición','Se agenda la visita. El técnico captura medidas, notas y fotos desde el celular, directo en la ficha del cliente.'],
+    ['Cotización','El estimado se arma con el catálogo de precios y la plantilla de la empresa. Se calcula el margen antes de enviarlo.'],
+    ['Aprobación','El cliente recibe el estimado por correo y lo aprueba con un enlace. El estado se actualiza solo.'],
+    ['Proyecto programado','El estimado aprobado se convierte en proyecto con fecha, materiales y cuadrilla asignada en el calendario.'],
+    ['Instalación','La cuadrilla ve su asignación en la app, marca avances, sube fotos y reporta órdenes de cambio.'],
+    ['Cierre','Revisión final con fotos de entrega y conformidad del cliente. El proyecto queda documentado.'],
+    ['Factura y cobro','Se registra la factura y los pagos. Los reportes muestran facturado, cobrado y pendiente al instante.']
+  ];
+  var cur = 0, flowTimer = null;
+  function setStep(i){
+    cur = i;
+    steps.forEach(function(s,k){ s.classList.toggle('done', k<i); s.classList.toggle('now', k===i); });
+    fill.style.setProperty('--p', (i/(steps.length-1)).toFixed(3));
+    fdTxt.classList.add('swap');
+    setTimeout(function(){
+      fdIcon.innerHTML = steps[i].querySelector('.dot').innerHTML;
+      fdTxt.innerHTML = '<b>'+info[i][0]+'</b><span>'+info[i][1]+'</span>';
+      fdTxt.classList.remove('swap');
+    }, 250);
+  }
+  steps.forEach(function(s,k){ s.style.cursor='pointer'; s.addEventListener('click', function(){ setStep(k); restartFlow(); }); });
+  function restartFlow(){ clearInterval(flowTimer); if(!reduce) flowTimer = setInterval(function(){ setStep((cur+1)%steps.length); }, 2400); }
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ setStep(cur); restartFlow(); } else clearInterval(flowTimer); });
+  },{threshold:.3}).observe(document.getElementById('flow'));
+
+  /* ---- Estimate email demo ---- */
+  var msg = 'Hola, familia Rodríguez:\n\nAdjuntamos el estimado para su puerta de ducha frameless. Puede revisarlo y aprobarlo en línea desde el enlace incluido.\n\nGracias por confiar en Prime Glass Solutions.';
+  var typed = document.getElementById('typed'), sendBtn = document.getElementById('sendBtn'), stamp = document.getElementById('stamp');
+  var stats = [].slice.call(document.querySelectorAll('#mailStatus span'));
+  var running = false, timers = [];
+  function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+  function setTyped(n){ typed.innerHTML = msg.slice(0,n).replace(/\n/g,'<br>'); }
+  function runMail(){
+    if(running) return; running = true;
+    timers.forEach(clearTimeout); timers = [];
+    setTyped(0); sendBtn.className = 'sendbtn'; sendBtn.lastElementChild.textContent = 'Enviar';
+    stats.forEach(function(s){ s.classList.remove('on'); }); stamp.classList.remove('on');
+    if(reduce){ setTyped(msg.length); stats.forEach(function(s){s.classList.add('on');}); stamp.classList.add('on'); return; }
+    var i = 0;
+    (function tick(){ setTyped(++i); if(i < msg.length) later(tick, 18 + Math.random()*26); else later(send, 700); })();
+    function send(){
+      sendBtn.classList.add('go');
+      later(function(){ sendBtn.classList.add('sent'); sendBtn.lastElementChild.textContent = 'Enviado'; stats[0].classList.add('on'); }, 500);
+      later(function(){ stats[1].classList.add('on'); }, 1700);
+      later(function(){ stats[2].classList.add('on'); stamp.classList.add('on'); }, 2900);
+      later(function(){ running = false; runMail(); }, 7500);
+    }
+  }
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting) runMail(); else { running = false; timers.forEach(clearTimeout); } });
+  },{threshold:.25}).observe(document.getElementById('estDemo'));
+
+  /* ---- Phone screens ---- */
+  var scrs = [].slice.call(document.querySelectorAll('[data-scr]')), tabs = [].slice.call(document.querySelectorAll('[data-tab]')), si = 0;
+  if(!reduce) setInterval(function(){
+    var prev = scrs[si]; prev.classList.remove('on'); prev.classList.add('out');
+    setTimeout(function(){ prev.classList.remove('out'); }, 700);
+    si = (si+1) % scrs.length; scrs[si].classList.add('on');
+    tabs.forEach(function(t,k){ t.classList.toggle('on', k===si); });
+  }, 3800);
+
+  /* ---- Pricing toggle ---- */
+  var tg = document.getElementById('webToggle'), tn = document.getElementById('totalNum'), wl = document.getElementById('webLine'), shown = 744;
+  function animTo(v){
+    var from = shown, t0 = null; shown = v;
+    if(reduce){ tn.textContent = fmt(v); return; }
+    (function f(t){ if(!t0) t0=t; var p=Math.min((t-t0)/600,1), e=1-Math.pow(1-p,3); tn.textContent = fmt(from+(v-from)*e); if(p<1) requestAnimationFrame(f); })(performance.now());
+  }
+  function flip(){
+    var on = tg.getAttribute('aria-checked') !== 'true';
+    tg.setAttribute('aria-checked', on);
+    wl.classList.toggle('off', !on);
+    animTo(on ? 744 : 609);
+    var t = on ? 744 : 609;
+    document.getElementById('pay60').textContent = (t*.6).toFixed(2);
+    document.getElementById('pay40').textContent = (t*.4).toFixed(2);
+  }
+  tg.addEventListener('click', flip);
+  tg.addEventListener('keydown', function(e){ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); flip(); } });
+})();
+</script>
+</body>
+</html>

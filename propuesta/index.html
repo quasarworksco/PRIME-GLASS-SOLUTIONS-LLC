@@ -31,13 +31,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 
 /* ---------- Ambient background ---------- */
 .ambient{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
-.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;will-change:transform}
-@keyframes drift1{50%{transform:translate(180px,140px) scale(1.15)}}
-@keyframes drift2{50%{transform:translate(-160px,-120px) scale(.9)}}
-@keyframes drift3{50%{transform:translate(120px,-160px) scale(1.1)}}
 .gridbg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%);opacity:.5}
-.grain{position:fixed;inset:-50%;z-index:-1;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 8s steps(8) infinite}
-@keyframes grain{25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-2%)}}
 
 /* ---------- Layout ---------- */
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
@@ -54,12 +48,14 @@ h2 em,h1 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-sp
 .head{margin-bottom:64px}
 
 /* glass card */
-.card{position:relative;background:rgba(255,255,255,.028);transition:border-color .4s,background .4s;border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);overflow:hidden;isolation:isolate}
+.card{position:relative;background:rgba(255,255,255,.028);transition:border-color .4s,background .4s;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;isolation:isolate}
 .card:hover{border-color:rgba(79,139,255,.45);background:rgba(79,139,255,.04)}
 
 /* reveal */
-.rv{opacity:0;transform:translateY(34px);filter:blur(6px);transition:opacity 1s var(--ease),transform 1s var(--ease),filter 1s var(--ease);transition-delay:var(--d,0s)}
-.rv.in{opacity:1;transform:none;filter:none}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+
+.off *,.off *::before,.off *::after{animation-play-state:paused!important}
 
 /* ---------- Nav ---------- */
 .progress{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--grad);z-index:60}
@@ -121,19 +117,19 @@ nav.top{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;w
 .kc b{display:block;font-weight:500;font-size:11px;margin-bottom:4px}
 .kc .tg{display:inline-block;font-size:9px;padding:2px 6px;border-radius:5px;margin-top:6px}
 .tg.c{background:rgba(79,139,255,.14);color:var(--cyan)}.tg.v{background:rgba(157,187,255,.16);color:var(--violet)}.tg.g{background:rgba(79,139,255,.14);color:var(--green)}.tg.a{background:rgba(255,255,255,.14);color:var(--amber)}
-.kc.moving{animation:moveCard 7s var(--ease) infinite;position:relative;z-index:2}
-@keyframes moveCard{0%,18%{transform:none;box-shadow:none}28%{transform:translate(0,-6px) rotate(-2deg);box-shadow:0 18px 30px -10px rgba(0,0,0,.6)}48%,80%{transform:translate(calc(100% + 8px),-6px) rotate(0);box-shadow:0 0 0 1px var(--cyan)}90%,100%{transform:translate(calc(100% + 8px),0);box-shadow:none}}
+.kc.moving{animation:moveCard 7s var(--ease) infinite;position:relative;z-index:2;border-color:var(--cyan)}
+@keyframes moveCard{0%,18%{transform:none}28%{transform:translate(0,-6px) rotate(-2deg)}48%,80%{transform:translate(calc(100% + 8px),-6px) rotate(0)}90%,100%{transform:translate(calc(100% + 8px),0)}}
 .mini-bars{display:flex;gap:6px;align-items:flex-end;height:54px;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.02)}
 .mini-bars i{flex:1;border-radius:4px 4px 1px 1px;background:var(--blue);transform-origin:bottom;animation:barPulse 3.2s ease-in-out infinite;animation-delay:calc(var(--k)*.15s)}
 @keyframes barPulse{0%,100%{transform:scaleY(.55)}50%{transform:scaleY(1)}}
-.float{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px 10px 10px;border-radius:14px;background:rgba(12,20,36,.85);border:1px solid var(--line2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 20px 50px -15px rgba(0,0,0,.7);font-size:12px;white-space:nowrap;opacity:0;animation:fadeUp .9s var(--ease) forwards,bob 6s ease-in-out infinite;animation-delay:var(--d),calc(var(--d) + 1s)}
+.float{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px 10px 10px;border-radius:14px;background:rgba(12,20,36,.85);border:1px solid var(--line2);box-shadow:0 20px 50px -15px rgba(0,0,0,.7);font-size:12px;white-space:nowrap;opacity:0;animation:fadeUp .9s var(--ease) forwards,bob 6s ease-in-out infinite;animation-delay:var(--d),calc(var(--d) + 1s)}
 .float .ic{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:16px}
 .float small{display:block;color:var(--dim);font-size:10.5px}
 .float.f1{top:-22px;right:-14px;--d:1.6s}.float.f1 .ic{background:rgba(79,139,255,.15);color:var(--green)}
 .float.f2{bottom:70px;left:-40px;--d:1.9s}.float.f2 .ic{background:rgba(79,139,255,.15);color:var(--cyan)}
 .float.f3{bottom:-22px;right:30px;--d:2.2s}.float.f3 .ic{background:rgba(157,187,255,.16);color:var(--violet)}
 @keyframes bob{50%{translate:0 -8px}}
-.shard{position:absolute;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none;animation:shard 14s ease-in-out infinite}
+.shard{position:absolute;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);pointer-events:none;animation:shard 14s ease-in-out infinite}
 .shard.s1{width:120px;height:160px;top:-60px;left:-50px;clip-path:polygon(20% 0,100% 15%,80% 100%,0 70%);--r:-14deg}
 .shard.s2{width:90px;height:110px;bottom:-40px;left:40%;clip-path:polygon(0 10%,100% 0,70% 100%);animation-delay:-5s;--r:18deg}
 @keyframes shard{0%,100%{transform:rotate(var(--r)) translateY(0)}50%{transform:rotate(calc(var(--r)*-1)) translateY(-18px)}}
@@ -429,6 +425,11 @@ nav.top{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;w
 .stg h4{font-size:17px;font-weight:500;margin:8px 0 6px}
 .stg p{font-size:14.5px;color:var(--muted)}
 
+.early{display:flex;gap:14px;align-items:flex-start;max-width:720px;margin-top:22px;padding:16px 18px;border-radius:16px;border:1px solid rgba(79,139,255,.4);background:rgba(79,139,255,.08)}
+.early .ico{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--blue);color:#fff;font-size:17px}
+.early b{display:block;font-family:var(--display);font-weight:500;font-size:16px;margin-bottom:2px}
+.early span{font-size:14.5px;color:var(--muted)}
+
 /* ---------- Website ---------- */
 .web-top{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;margin-bottom:50px}
 .addon{display:flex;align-items:center;gap:16px;padding:18px 22px;border-radius:20px;border:1px solid rgba(157,187,255,.35);background:rgba(79,139,255,.08)}
@@ -449,7 +450,7 @@ nav.top{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;w
 .s-nav nav{display:flex;gap:16px;align-items:center}
 .s-nav nav em{font-style:normal;padding:6px 12px;border-radius:999px;background:var(--cyan);color:#fff;font-weight:600}
 .s-hero{height:400px;margin:0 16px;border-radius:16px;position:relative;overflow:hidden;background:#0B1A33;display:flex;flex-direction:column;justify-content:center;padding:0 36px}
-.s-hero .pane{position:absolute;right:40px;top:40px;width:180px;height:300px;border-radius:6px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);backdrop-filter:blur(4px);transform:rotate(6deg)}
+.s-hero .pane{position:absolute;right:40px;top:40px;width:180px;height:300px;border-radius:6px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);transform:rotate(6deg)}
 .s-hero .pane.b{right:150px;top:80px;width:140px;height:240px;transform:rotate(-8deg);opacity:.7}
 .s-hero small{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--cyan);text-transform:uppercase}
 .s-hero h6{font-family:var(--display);font-size:34px;font-weight:600;line-height:1.05;margin:10px 0 12px;max-width:340px;letter-spacing:-.02em}
@@ -751,7 +752,6 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
 </svg>
 
 <div class="ambient" aria-hidden="true"><div class="gridbg"></div></div>
-<div class="grain" aria-hidden="true"></div>
 <div class="progress" id="progress"></div>
 
 <nav class="top" aria-label="Secciones">
@@ -792,7 +792,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
       <div class="meta fade-in" style="--d:1.5s">
         <div><small>Preparado para</small><strong>Prime Glass Solutions LLC</strong></div>
         <div><small>Preparado por</small><strong>DGP Global Group &amp; Moya Company</strong></div>
-        <div><small>Entrega</small><strong class="big"><span data-count="6">0</span> días</strong></div>
+        <div><small>Entrega máxima</small><strong class="big"><span data-count="6">0</span> días</strong></div>
         <div><small>Inversión</small><strong class="big">$<span data-count="585">0</span></strong></div>
       </div>
     </div>
@@ -1163,8 +1163,9 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
   <div class="wrap">
     <div class="head">
       <span class="eyebrow rv"><span class="num">09</span> Plan de entrega</span>
-      <h2 class="rv" style="--d:.1s">Listo para operar en <em class="gtext">6 días</em>.</h2>
-      <p class="lead rv" style="--d:.2s">Un calendario claro, con avances visibles durante todo el proceso. El conteo inicia con la aprobación de la propuesta y la entrega de la información inicial.</p>
+      <h2 class="rv" style="--d:.1s">Listo para operar en <em class="gtext">6 días</em> o menos.</h2>
+      <p class="lead rv" style="--d:.2s">Seis días es el plazo máximo. El conteo inicia con la aprobación de la propuesta y la entrega de la información inicial, con avances visibles durante todo el proceso.</p>
+      <div class="early rv" style="--d:.3s"><span class="ico"><svg class="i"><use href="#i-zap"/></svg></span><div><b>Posible entrega anticipada</b><span>Si la información inicial llega completa y las validaciones con el equipo son ágiles, la plataforma puede entregarse en menos de 6 días.</span></div></div>
     </div>
     <div class="tl" id="tl">
       <div class="fill"></div>
@@ -1250,7 +1251,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
     </div>
     <div class="price-grid">
       <div class="card pc main rv">
-        <div class="tagline"><span>Plataforma CRM operativa</span><em><svg class="i"><use href="#i-clock"/></svg>Entrega en 6 días</em></div>
+        <div class="tagline"><span>Plataforma CRM operativa</span><em><svg class="i"><use href="#i-clock"/></svg>Entrega en máx. 6 días</em></div>
         <h3>CRM + App móvil + Comunicación</h3>
         <p class="desc">Desarrollo completo de la plataforma descrita en esta propuesta.</p>
         <div class="amount"><b><sup>$</sup><span data-count="585">0</span></b><span>USD · pago único de desarrollo</span></div>
@@ -1295,7 +1296,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
         <div><span>Dominio .com (1 año) · incluido</span><b>$24.00</b></div>
         <div style="color:var(--dim);font-size:13px"><span>Hosting e integraciones adicionales</span><span>Por aparte</span></div>
       </div>
-      <div class="sum"><small>Total de la propuesta</small><b><sup>$</sup><span id="totalNum">744</span></b><span>USD · entrega en 6 días</span></div>
+      <div class="sum"><small>Total de la propuesta</small><b><sup>$</sup><span id="totalNum">744</span></b><span>USD · entrega en 6 días o menos</span></div>
     </div>
 
     <div class="card pay rv">
@@ -1303,7 +1304,7 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
       <div class="pay-bar"><i class="a"></i><i class="b"></i></div>
       <div class="pay-grid">
         <div class="pp"><span class="pct">60%</span><div><b>Anticipo</b><span>Al aprobar la propuesta, antes de iniciar el desarrollo.</span></div><strong>$<span id="pay60">446.40</span></strong></div>
-        <div class="pp"><span class="pct b">40%</span><div><b>Saldo final</b><span>Al entregar la plataforma funcionando, en el día 6.</span></div><strong>$<span id="pay40">297.60</span></strong></div>
+        <div class="pp"><span class="pct b">40%</span><div><b>Saldo final</b><span>Al entregar la plataforma funcionando, a más tardar el día 6.</span></div><strong>$<span id="pay40">297.60</span></strong></div>
       </div>
     </div>
 
@@ -1335,14 +1336,14 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
     <div class="next">
       <div class="card nx rv"><span class="k">01</span><b>Aprobación</b><span>Prime Glass confirma la propuesta y el alcance elegido, con o sin sitio web.</span></div>
       <div class="card nx rv" style="--d:.1s"><span class="k">02</span><b>Información inicial</b><span>Logo, servicios, lista de precios, usuarios y formato de estimado actual.</span></div>
-      <div class="card nx rv" style="--d:.2s"><span class="k">03</span><b>Inicio de los 6 días</b><span>Kickoff y comienzo del desarrollo con avances visibles durante todo el proceso.</span></div>
+      <div class="card nx rv" style="--d:.2s"><span class="k">03</span><b>Inicio del desarrollo</b><span>Kickoff y entrega en un máximo de 6 días, con posibilidad de terminar antes.</span></div>
     </div>
     <div class="closing rv">
       <div class="beam"></div>
       <div class="by"><span class="plogo lg"><img src="assets/dgp-logo.png" alt="DGP Global Group" width="206" height="240"></span><span class="amp"><svg class="i"><use href="#i-x"/></svg></span><span class="plogo lg"><img src="assets/moya-logo.png" alt="Moya &amp; Company" width="240" height="174"></span></div>
       <span class="eyebrow">Para Prime Glass Solutions LLC</span>
       <h2>Que el equipo trabaje <em class="gtext">conectado</em>, desde la oficina hasta la obra.</h2>
-      <p class="lead">Una plataforma hecha a la medida de su operación, entregada en 6 días por DGP Global Group y Moya Company.</p>
+      <p class="lead">Una plataforma hecha a la medida de su operación, entregada en 6 días o menos por DGP Global Group y Moya Company.</p>
       <div class="row">
         <a class="btn btn-p" href="#inversion">Revisar inversión<svg class="i"><use href="#i-arrow"/></svg></a>
         <button class="btn btn-g" onclick="window.print()"><svg class="i"><use href="#i-download"/></svg>Descargar propuesta</button>
@@ -1390,6 +1391,12 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
   });
   tb.innerHTML = h;
 
+  /* ---- Pause off-screen animations ---- */
+  var pio = new IntersectionObserver(function(es){
+    es.forEach(function(e){ e.target.classList.toggle('off', !e.isIntersecting); });
+  },{rootMargin:'100px 0px'});
+  document.querySelectorAll('main > section, .marquee').forEach(function(el){ pio.observe(el); });
+
   /* ---- Reveal ---- */
   var io = new IntersectionObserver(function(es){
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
@@ -1429,15 +1436,6 @@ footer{padding:60px 0 50px;border-top:1px solid var(--line);margin-top:100px}
   addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
   addEventListener('resize', onScroll);
   onScroll();
-
-  /* ---- Card spotlight ---- */
-  document.addEventListener('pointermove', function(e){
-    var c = e.target.closest && e.target.closest('.card');
-    if(!c) return;
-    var r = c.getBoundingClientRect();
-    c.style.setProperty('--mx', (e.clientX - r.left)+'px');
-    c.style.setProperty('--my', (e.clientY - r.top)+'px');
-  });
 
   /* ---- Hero tilt ---- */
   var stage = document.getElementById('stage'), mock = document.getElementById('mock');

@@ -1115,7 +1115,8 @@ section.light .phone{box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 50px 90p
     <div class="head">
       <span class="eyebrow rv"><span class="num">07</span> Usuarios y permisos</span>
       <h2 class="rv" style="--d:.1s">Cada persona ve <em>lo que necesita</em>.</h2>
-      <p class="lead rv" style="--d:.2s">Cuatro perfiles con acceso según sus funciones. La cuadrilla no ve márgenes; ventas no modifica facturación; gerencia lo ve todo.</p>
+      <p class="lead rv" style="--d:.2s">Cuatro roles con acceso según sus funciones. La cuadrilla no ve márgenes; ventas no modifica facturación; gerencia lo ve todo.</p>
+      <div class="early rv" style="--d:.3s"><span class="ico"><svg class="i"><use href="#i-users"/></svg></span><div><b>Hasta 16 usuarios con roles</b><span>La plataforma base incluye 4 usuarios. Esta propuesta incluye la ampliación a 16 usuarios, cada uno con su propio acceso y su rol asignado.</span></div></div>
     </div>
     <div class="card rv">
       <div class="matrix">
@@ -1294,11 +1295,12 @@ section.light .phone{box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 50px 90p
           <li><svg class="i"><use href="#i-check"/></svg>App en pantalla de inicio</li>
           <li><svg class="i"><use href="#i-check"/></svg>Llamadas, video y chat interno</li>
           <li><svg class="i"><use href="#i-check"/></svg>Avisos y notificaciones</li>
-          <li><svg class="i"><use href="#i-check"/></svg>4 perfiles de usuario y permisos</li>
+          <li><svg class="i"><use href="#i-check"/></svg>4 roles de usuario y permisos</li>
           <li><svg class="i"><use href="#i-check"/></svg>Tablero de ingresos y reportes</li>
           <li><svg class="i"><use href="#i-check"/></svg>Exportación para contabilidad</li>
           <li><svg class="i"><use href="#i-check"/></svg>Capacitación y puesta en marcha</li>
           <li><svg class="i"><use href="#i-check"/></svg>Dominio .com incluido (1 año, $24)</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Hasta 16 usuarios con roles ($45)</li>
         </ul>
       </div>
       <div class="card pc side rv" style="--d:.15s">
@@ -1322,17 +1324,18 @@ section.light .phone{box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 50px 90p
         <div><span>Plataforma CRM operativa</span><b>$585.00</b></div>
         <div id="webLine"><span>Sitio web landing page</span><b>$135.00</b></div>
         <div><span>Dominio .com (1 año) · incluido</span><b>$24.00</b></div>
+        <div><span>Ampliación a 16 usuarios con roles · incluida</span><b>$45.00</b></div>
         <div style="color:var(--dim);font-size:13px"><span>Hosting e integraciones adicionales</span><span>Por aparte</span></div>
       </div>
-      <div class="sum"><small>Total de la propuesta</small><b><sup>$</sup><span id="totalNum">744</span></b><span>USD · entrega en 6 días o menos</span></div>
+      <div class="sum"><small>Total de la propuesta</small><b><sup>$</sup><span id="totalNum">789</span></b><span>USD · entrega en 6 días o menos</span></div>
     </div>
 
     <div class="card pay rv">
       <div class="pay-h"><div><span class="k">Forma de pago</span><b>60% al iniciar · 40% a la entrega</b></div><span class="pay-note">Montos sobre el total de la propuesta</span></div>
       <div class="pay-bar"><i class="a"></i><i class="b"></i></div>
       <div class="pay-grid">
-        <div class="pp"><span class="pct">60%</span><div><b>Anticipo</b><span>Al aprobar la propuesta, antes de iniciar el desarrollo.</span></div><strong>$<span id="pay60">446.40</span></strong></div>
-        <div class="pp"><span class="pct b">40%</span><div><b>Saldo final</b><span>Al entregar la plataforma funcionando, a más tardar el día 6.</span></div><strong>$<span id="pay40">297.60</span></strong></div>
+        <div class="pp"><span class="pct">60%</span><div><b>Anticipo</b><span>Al aprobar la propuesta, antes de iniciar el desarrollo.</span></div><strong>$<span id="pay60">473.40</span></strong></div>
+        <div class="pp"><span class="pct b">40%</span><div><b>Saldo final</b><span>Al entregar la plataforma funcionando, a más tardar el día 6.</span></div><strong>$<span id="pay40">315.60</span></strong></div>
       </div>
     </div>
 
@@ -1543,7 +1546,7 @@ section.light .phone{box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 50px 90p
   }, 3800);
 
   /* ---- Pricing toggle ---- */
-  var tg = document.getElementById('webToggle'), tn = document.getElementById('totalNum'), wl = document.getElementById('webLine'), shown = 744;
+  var tg = document.getElementById('webToggle'), tn = document.getElementById('totalNum'), wl = document.getElementById('webLine'), shown = 789;
   function animTo(v){
     var from = shown, t0 = null; shown = v;
     if(reduce){ tn.textContent = fmt(v); return; }
@@ -1553,8 +1556,8 @@ section.light .phone{box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 50px 90p
     var on = tg.getAttribute('aria-checked') !== 'true';
     tg.setAttribute('aria-checked', on);
     wl.classList.toggle('off', !on);
-    animTo(on ? 744 : 609);
-    var t = on ? 744 : 609;
+    animTo(on ? 789 : 654);
+    var t = on ? 789 : 654;
     document.getElementById('pay60').textContent = (t*.6).toFixed(2);
     document.getElementById('pay40').textContent = (t*.4).toFixed(2);
   }
